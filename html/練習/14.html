@@ -1,0 +1,92 @@
+<!doctype html><!--聲明當前文件為html文件-->
+<html lang="en"><!--語言為英語-->
+	<head><!--頭部-->
+		<meta charset="UTF-8"><!--字元編碼：utf-8國際編碼  gb2312中文編碼-->
+		<meta name="Keywords" content="關鍵詞">
+		<meta name="Description" content="描述">
+		<title>Document</title>
+		<style>/*css樣式表的衣櫃*/
+			#can{
+				background:#000;
+			}
+		</style>
+	</head>
+	<body onload="drawImg()"><!--身體-->
+		<canvas id="can" width="500" height="500">
+			您的瀏覽器不支援canvas標籤，請您更換瀏覽器！！
+		</canvas>
+		<img src="https://i.ibb.co/FnHLLm9/1.png" id="img" style="display:none" />
+		<script>
+			/*
+			繪製圖片
+				圖片預載入，獲取圖片檔案
+				onload中呼叫
+				drawImage(img,x,y,w,h);繪製圖片(圖片,座標x,座標y,寬度,高度)
+			*/
+			var can = document.getElementById("can");	
+			var cxt = can.getContext("2d");
+			/*
+			//方法一：存在部分不相容
+			var img = document.getElementById("img");
+			function drawImg(){
+				cxt.drawImage(img,0,0,can.width,can.height);
+			}
+			*/
+
+			//方法二:
+			var imgs = new Image();
+			imgs.src = "https://i.ibb.co/FnHLLm9/1.png";
+			imgs.onload = drawImg;//圖片載入完成再執行
+			function drawImg(){
+				cxt.drawImage(imgs,0,0,can.width,can.height);
+			}
+			var imgs = new Image();
+			imgs.src = "https://i.ibb.co/FnHLLm9/1.png";
+			imgs.onload = createPat;//圖片載入完成再執行
+            let canvas = document.getElementById("myCanvas");
+            let a = canvas.getContext("2d");
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight-20;
+            let mouse = {
+                x : 0,
+                y : 0,
+            }
+			function createPat(){
+				var bg = cxt.createPattern(imgs,"no-repeat");
+				a.fillStyle = bg;
+				a.fillRect(0,0,can.width,can.height);
+			}
+            function rd(min,max){
+                return Math.floor(Math.random()*(max-min+1))+min;
+            };
+            window.addEventListener('mousemove',(event) => {
+                mx = event.pageX-8;
+                my = event.pageY-7;
+            })
+            const draw = () =>{
+                //先清掉cvanvas目前繪製的圖形
+                a.clearRect(0, 0, canvas.width, canvas.height);
+                //開始作畫
+                a.fillStyle="rgba(255,0,0,0.1)";
+                a.beginPath();
+                for(j=0;j<5;j++){
+                    a.moveTo(mx,my)
+                    a.lineTo(mx+rd(-100,100),my+rd(-100,100))
+                    a.stroke()
+                }
+            }
+            const az = () =>{
+                a.clearRect(0, 0, canvas.width, canvas.height);
+                a.fillStyle = "#fff"
+                for(i=0;i<100;i++){
+                    a.beginPath();
+                    a.arc(rd(0,canvas.width),rd(0,canvas.height),rd(1,2),0,Math.PI*2);
+                    a.fill()
+                }
+            }
+            //在最後重複執行繪製，讓他50毫秒繪製一次
+            setInterval('draw()',0)
+            //setInterval('az()',0)
+		</script>
+	</body>
+</html>

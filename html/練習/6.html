@@ -1,0 +1,38 @@
+02.html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>在HTML中引用JavaScript的變數</title>
+    <script type="text/javascript">
+    var foobar = '674';//建立一個全域性變數“foobar”
+    function var2pass() {
+        document.getElementById('textfield').value = foobar;//給HTML元素的value屬性賦值
+        alert('應用變數成功！');
+    }
+    function displayVar() {
+        alert('變數值為' + foobar);
+    }
+    </script>
+</head>
+<body>
+    <h2>
+    在HTML中引用JavaScript的變數
+    </h2>
+    <hr>
+    <br>
+    <h5>單機相應的按鈕……</h5>
+    <form name="form1" method="post" action="">
+    <label>
+    <input type="text" name="textfield" id="textfield">
+    </label>
+    <!-- 繫結onclick事件 -->
+    <label>
+    <input type="button" name="button" id="button" value="顯示變數" onclick="javascript: void displayVar();">
+    </label>
+    <!-- 繫結onclick事件 -->
+    <label>
+    <input type="button" name="button2" id="button2" value="引用變數" onclick="javascript: void var2pass();">
+    </label>
+    </form>
+</body>
+</html>

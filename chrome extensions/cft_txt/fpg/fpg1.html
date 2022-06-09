@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>cft</title>
+    <style>
+:root {
+    --bg: #ffffff;
+    --scrollbar-track: #303030;
+    --scrollbar-thumbh: #6c6c6c;
+    --scrollbar-thumb: #a1a1a1;
+    --scrollbar-corner: #ababab;
+    --clr1: black;
+    --btnh: #f0f0f0;
+    --hrt: transparent;
+}
+body {
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    background: var(--bg);
+}
+#hrt>svg{
+    fill:var(--hrt);
+}
+#rna {
+    background: transparent;
+    border: 2px var(--bg) solid;
+    outline: none;
+    padding: unset;
+    border-radius: 10px;
+    font-family: "Comic Sans MS", 標楷體;
+    font-size: 25px;
+    color: var(--clr1);
+    width: calc(100vw - 16px - 160px);
+    height: 36px;
+    margin: 0 5px 0 5px;
+    white-space: pre;
+    resize: none;
+}
+svg.btn {
+    fill: var(--clr1);
+}
+#aqx>button {
+    background: transparent;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all .1s linear;
+}
+#aqx>button:hover {
+    background: var(--btnh);
+}
+#aqz {
+    width: calc(100vw - 16px);
+    height: calc(100vh - 70px);
+    margin-top: 10px;
+    outline: 2px var(--clr1) solid;
+}
+#ipc {
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+}
+#ipc::-webkit-color-swatch {
+    border: 1px var(--clr1) solid;
+}
+::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background-color: var(--scrollbar-track);
+}
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--scrollbar-thumbh);
+}
+::-webkit-scrollbar-thumb {
+    background-color: var(--scrollbar-thumb);
+    border-radius: 10px;
+}
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+::-webkit-scrollbar-corner {
+    background-color: var(--scrollbar-corner);
+    border-radius: 2px;
+}
+    </style>
+  </head>
+  <body>
+		<div id="aqx" style="display: flex;">
+			<button title="go back" id="gbk">
+				<svg class="btn" width="20px" version="1.0" viewBox="0 0 512.000000 512.000000" style="position:relative;left: -1px;top: 2px;"><g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)"><path d="M2729 5050 c-31 -9 -2661 -1908 -2701 -1951 -31 -32 -34 -54 -16 -94 10 -23 710 -531 2461 -1787 274 -196 285 -201 338 -149 l29 29 0 531 0 530 88 -5 c48 -3 136 -12 195 -20 541 -74 977 -385 1117 -798 118 -347 10 -724 -301 -1046 -35 -36 -71 -76 -81 -90 -53 -74 27 -155 137 -137 68 11 342 225 511 398 324 333 514 695 590 1124 27 150 25 442 -4 595 -72 384 -232 708 -494 997 -397 438 -994 710 -1646 749 l-112 7 0 524 c0 572 0 571 -57 590 -15 6 -40 7 -54 3z"></path></g></svg>
+			</button>
+            <textarea type="text" id="rna" disabled></textarea>
+			<button title="rename" id="rme">
+			</button>
+			<button title="bg color" id="bgc">
+				<input type="color" id="ipc">
+			</button>
+			<button title="heart" id="hrt">
+				<svg width="27px" style="position:relative;left: 0.4px;top: 2px;"viewBox="0 0 512 512" version="1.0"><g transform="translate(0,512) scale(0.1,-0.1)"><path d="M1220 4763 c-459 -70 -834 -351 -1053 -788 -61 -123 -103 -244 -134 -394 -23 -109 -26 -150 -27 -311 0 -156 3 -202 22 -290 65 -300 214 -605 445 -913 231 -307 611 -686 1002 -998 280 -224 696 -516 936 -658 137 -81 160 -82 285 -8 551 328 1231 868 1622 1287 453 486 692 894 779 1329 27 132 24 402 -5 549 -93 465 -368 851 -751 1050 -120 63 -180 86 -306 118 -136 35 -375 44 -515 20 -161 -28 -357 -103 -484 -184 -156 -100 -323 -261 -418 -403 -29 -43 -55 -79 -58 -79 -3 0 -30 37 -60 83 -72 108 -260 296 -370 369 -165 109 -342 181 -526 213 -79 14 -316 19 -384 8z"/></g></svg>
+			</button>
+		</div>
+		<iframe id="aqz" frameborder="no" marginwidth="0" marginheight="0"></iframe>
+        <textarea id="sdl" style="top: -50px;z-index: -1;position: fixed;"></textarea>
+        <script src="fpg1.js"></script>
+  </body>
+</html>

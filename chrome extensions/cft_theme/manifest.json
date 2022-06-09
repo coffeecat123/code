@@ -1,0 +1,33 @@
+{
+   "description": "?..",
+   "manifest_version": 2,
+   "name": "cft_theme",
+   "version": "1.1",
+   "theme": {
+      "colors": {
+         "button_background":[50,50,50],
+         "bookmark_text": [ 255,160,220],
+         "frame": [ 0, 0, 0 ],
+         "ntp_background": [ 50, 50, 50 ],
+         "background_tab": [ 30, 30, 30 ],
+         "background_tab_inactive": [ 30, 30, 30 ],
+         "tab_background_text": [ 160, 160, 160 ],
+         "tab_text": [ 255, 255, 255 ],
+         "toolbar": [ 60, 60, 60 ]
+      },
+      "images": {
+         "theme_ntp_background": "cft_1920x1080.png"
+      },
+      "properties": {
+         "ntp_background_alignment": "bottom",
+         "ntp_background_repeat": "repeat",
+         "ntp_logo_alternate": 1
+      },
+      "tints": {
+         "buttons":[-1, -1, 0.95],
+         "frame_inactive": [ -1, -1, -1 ],
+         "frame_incognito": [ -1, -1, -1 ],
+         "frame_incognito_inactive": [ -1, -1, -1 ]
+      }
+   }
+}

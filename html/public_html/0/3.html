@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>?</title>
+        <script>
+            window.onload=()=>{
+                document.querySelectorAll("script")[document.querySelectorAll("script").length-1].remove();
+                document.querySelectorAll("div")[document.querySelectorAll("div").length-1].remove();
+            };
+        </script>
+        <style>
+        </style>
+  </head>
+  <body>
+    <div id="qwe" style="width:300px;height:200px;background:red;">
+        
+    </div>
+     <script>
+     var qwe=document.querySelector("#qwe");
+        qwe.onchange=(e)=>{
+    console.log(e);
+}
+        </script>
+  </body>
+</html>

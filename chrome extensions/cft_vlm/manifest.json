@@ -1,0 +1,30 @@
+{
+  "name": "cft_vlm",
+  "description": "^_^",
+  "version": "1.0.1",
+  "manifest_version": 2,
+  "permissions": [
+    "tabCapture",
+    "activeTab",
+    "storage",
+    "tabs"
+  ],
+  "background": {
+     "scripts": [ "background.js" ]
+  },
+  "browser_action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "/images/cft_16.png",
+      "32": "/images/cft_32.png",
+      "48": "/images/cft_48.png",
+      "128": "/images/cft_128.png"
+    }
+  },
+  "icons": {
+    "16": "/images/cft_16.png",
+    "32": "/images/cft_32.png",
+    "48": "/images/cft_48.png",
+    "128": "/images/cft_128.png"
+  }
+}

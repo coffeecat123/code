@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>recycle bin</title>
+    <style>
+:root {
+    --bg: #ffffff;
+    --scrollbar-track: #303030;
+    --scrollbar-thumbh: #6c6c6c;
+    --scrollbar-thumb: #ababab;
+    --scrollbar-corner: #ababab;
+    --clr1: black;
+    --btnh: #f0f0f0;
+    --oln: #ff0000;
+    --hrt: transparent;
+}
+body {
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    background: var(--bg);
+}
+* {
+    font-family: "Comic Sans MS", 標楷體;
+}
+#hrt>svg{
+    fill:var(--hrt);
+}
+#spn {
+    font-size: 25px;
+    color: var(--clr1);
+    width: calc(100vw - 16px - 160px);
+    margin: 0 5px 0 5px;
+}
+svg.btn {
+    fill: var(--clr1);
+}
+svg.moon {
+    fill: transparent;
+    stroke: var(--clr1);
+    left: 1px;
+    top: 2px;
+    position: relative;
+}
+svg.sun {
+    fill: transparent;
+    stroke: var(--clr1);
+    left: 1px;
+    top: 2px;
+    position: relative;
+}
+#aqx>button {
+    background: transparent;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all .1s linear;
+}
+#aqx>button:hover {
+    background: var(--btnh);
+}
+#aqz {
+    width: calc(100vw - 16px);
+    height: calc(100vh - 70px);
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    overflow-y: auto;
+    align-content: flex-start;
+}
+.tet{
+    background: transparent;
+    border: none;
+    outline: none;
+    margin: unset;
+    padding: unset;
+    border-radius: 10px;
+    font-family: "Comic Sans MS", 標楷體;
+    font-size: 25px;
+    width: 116%;
+    height: 101%;
+    left: -5px;
+    top: 0px;
+    white-space: pre;
+    resize: none;
+    position: relative;
+}
+.fle {
+    width: 86px;
+    height: 86px;
+    margin: 5px;
+    font-size: 26px;
+    border-radius: 10px;
+    white-space: pre;
+}
+.fle:hover {
+    outline: 3px #808080 solid;
+}
+::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background-color: var(--scrollbar-track);
+}
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--scrollbar-thumbh);
+}
+::-webkit-scrollbar-thumb {
+    background-color: var(--scrollbar-thumb);
+    border-radius: 10px;
+}
+::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+}
+::-webkit-scrollbar-corner {
+    background-color: var(--scrollbar-corner);
+    border-radius: 2px;
+}
+    </style>
+  </head>
+  <body>
+		<div id="aqx" style="display: flex;">
+			<button title="go back" id="gbk">
+				<svg class="btn" width="20px" style="position:relative;left: -1px;top: 2px;" version="1.0" viewBox="0 0 512.000000 512.000000"><g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)"><path d="M2729 5050 c-31 -9 -2661 -1908 -2701 -1951 -31 -32 -34 -54 -16 -94 10 -23 710 -531 2461 -1787 274 -196 285 -201 338 -149 l29 29 0 531 0 530 88 -5 c48 -3 136 -12 195 -20 541 -74 977 -385 1117 -798 118 -347 10 -724 -301 -1046 -35 -36 -71 -76 -81 -90 -53 -74 27 -155 137 -137 68 11 342 225 511 398 324 333 514 695 590 1124 27 150 25 442 -4 595 -72 384 -232 708 -494 997 -397 438 -994 710 -1646 749 l-112 7 0 524 c0 572 0 571 -57 590 -15 6 -40 7 -54 3z"></path></g></svg>
+			</button>
+            <span id="spn">recycle bin</span>
+			<button title="restore(0)" id="res">
+				<svg class="btn" width="40px" style="position:relative;left: -6px;top: -1px;" version="1.0" viewBox="0 0 512 512"><g transform="translate(0,512) scale(0.1,-0.1)"><path d="M2653 4010 c-71 -16 -96 -43 -260 -270 l-161 -225 22 -20 c13 -11 233 -168 489 -350 256 -181 466 -333 467 -337 0 -5 -268 -8 -595 -8 l-595 0 0 -769 c0 -750 0 -769 20 -793 70 -89 344 -130 880 -130 440 0 673 24 808 82 99 43 92 -6 92 626 0 305 3 554 6 554 4 0 35 -20 69 -45 58 -41 64 -43 77 -27 32 38 286 399 304 432 11 22 18 55 18 91 -1 99 -23 123 -258 289 -113 80 -205 148 -206 152 0 4 18 36 41 70 34 53 40 69 36 101 -3 21 -13 48 -24 59 -18 20 -431 316 -470 336 -27 15 -78 15 -104 2 -10 -6 -37 -36 -60 -66 -26 -36 -46 -54 -55 -50 -8 3 -100 67 -205 141 -104 75 -200 140 -212 144 -38 14 -91 19 -124 11z m747 -695 c379 -270 690 -494 690 -498 0 -11 -173 -257 -182 -257 -7 0 -1364 963 -1385 983 -10 10 8 40 79 140 51 70 96 126 101 124 4 -1 318 -223 697 -492z m153 -746 l67 -49 0 -579 c0 -519 -2 -579 -16 -585 -41 -16 -280 -39 -469 -44 -348 -11 -815 12 -899 44 -14 6 -16 71 -16 635 l0 629 633 0 632 -1 68 -50z"/><path d="M2440 1940 l0 -420 80 0 80 0 0 420 0 420 -80 0 -80 0 0 -420z"/><path d="M2850 1940 l0 -420 80 0 80 0 0 420 0 420 -80 0 -80 0 0 -420z"/><path d="M3240 1940 l0 -420 80 0 80 0 0 420 0 420 -80 0 -80 0 0 -420z"/><path d="M1800 3245 c-121 -27 -255 -84 -350 -148 -66 -45 -186 -163 -235 -232 -72 -101 -125 -220 -162 -365 l-9 -35 -106 -3 -107 -3 231 -289 c127 -160 232 -289 233 -288 1 2 102 131 225 288 l222 285 -121 3 c-96 2 -123 6 -127 17 -11 26 26 161 65 241 120 247 337 395 616 420 63 6 145 -4 278 -33 24 -5 28 -3 25 13 -4 23 -112 76 -225 110 -74 22 -111 27 -238 30 -106 3 -169 -1 -215 -11z"/></g></svg>
+			</button>
+			<button title="delete(0)" id="del">
+				<svg class="btn" width="26px" style="position:relative;left: 1px;top: 2px;" viewBox="0 0 24 24"><path d="M15 4V3H9v1H4v2h1v13c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V6h1V4h-5zm2 15H7V6h10v13z"></path><path d="M9 8h2v9H9zm4 0h2v9h-2z"></path></svg>
+			</button>
+			<button title="heart" id="hrt">
+				<svg width="27px" style="position:relative;left: 0.4px;top: 2px;"viewBox="0 0 512 512" version="1.0"><g transform="translate(0,512) scale(0.1,-0.1)"><path d="M1220 4763 c-459 -70 -834 -351 -1053 -788 -61 -123 -103 -244 -134 -394 -23 -109 -26 -150 -27 -311 0 -156 3 -202 22 -290 65 -300 214 -605 445 -913 231 -307 611 -686 1002 -998 280 -224 696 -516 936 -658 137 -81 160 -82 285 -8 551 328 1231 868 1622 1287 453 486 692 894 779 1329 27 132 24 402 -5 549 -93 465 -368 851 -751 1050 -120 63 -180 86 -306 118 -136 35 -375 44 -515 20 -161 -28 -357 -103 -484 -184 -156 -100 -323 -261 -418 -403 -29 -43 -55 -79 -58 -79 -3 0 -30 37 -60 83 -72 108 -260 296 -370 369 -165 109 -342 181 -526 213 -79 14 -316 19 -384 8z"/></g></svg>
+			</button>
+		</div>
+		<div id="aqz"></div>
+        <textarea id="sdl" style="top: -50px;z-index: -1;position: fixed;"></textarea>
+        <script src="fpg2.js"></script>
+  </body>
+</html>

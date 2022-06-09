@@ -1,0 +1,171 @@
+:root {
+    --c1: 143 0 115;
+}
+.curwaitmsg {
+    background-color: #181818;
+}
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    background-color: #303030;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #6c6c6c;
+}
+::-webkit-scrollbar-thumb {
+    background-color: #a1a1a1;
+    border-radius: 10px;
+}
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+::-webkit-resizer {
+    background: #828282;
+    outline: 2px solid #b6b6b6;
+}
+* {
+    font-family: "Comic Sans MS", 標楷體;
+}
+pre.CodeMirror-line * {
+    font-family: monospace !important;
+}
+body:not(.main) span a img {
+    filter: invert(100%);
+}
+body:not(.main) td {
+    background-color: #222;
+}
+body:not(.main) td:hover {
+    background-color: #a0a0a0;
+}
+.cm-trailingspace {
+    background-color: rgb(var(--c1)) !important;
+}
+.CodeMirror-bookmarks-marked {
+    background-color: rgb(var(--c1) /40%);
+}
+.CodeMirror-bookmarks {
+    background: #181818;
+}
+.CodeMirror-selected {
+    background: #4e4e4e !important;
+}
+.CodeMirror-dialog input[type=text] {
+    width: 20em !important;
+}
+.CodeMirror-dialog input {
+    font-size: 20px;
+}
+body .far.green {
+    color: rgb(var(--c1)) !important;
+}
+.cm-s-default .cm-atom {
+    color: #b897fb;
+}
+.CodeMirror-code {
+    color: #fdff87;
+}
+.submenu {
+    background-color: #9a9a9a;
+    border: solid 3px #626262;
+}
+.cm-s-default .cm-variable-2 {
+    color: #1c8eff;
+}
+.submenu tr.entry:hover {
+    background-color: #c7c7c7 !important;
+}
+.trash_actions, .trash_script_details {
+    background-color: #626262;
+}
+.scripttable tr.selected:hover {
+    background-color: #b5b092;
+}
+textarea {
+    color: #eeedee;
+}
+input[type="text"]:not(.CodeMirror input), textarea, select[multiple] {
+    background-color: #474747;
+}
+.editor_container {
+    font-size: 20px;
+}
+input, select, button {
+    background: rgb(var(--c1));
+    color: #efefef;
+}
+.head_container {
+    background-color: rgb(var(--c1));
+}
+.enabler.enabler_enabled .far.on {
+    color: rgb(var(--c1)) !important;
+}
+.editormenu {
+    background-color: #7e7e7e;
+}
+.cm-s-default .cm-string {
+    color: #53d4dd;
+}
+.cm-s-default .cm-string-2 {
+    color: #f89135;
+}
+.CodeMirror {
+    background: #181818;
+    color: #feffa1;
+}
+.cm-trailingspace {
+    background-color: rgb(143 0 115);
+}
+.cm-s-default .cm-def, .cm-s-default .cm-defarg, .cm-s-default .cm-deffunc {
+    color: #7b7bff;
+}
+.cm-s-default .cm-comment {
+    color: #b0b0b0;
+}
+.cm-s-default .cm-keyword {
+    color: #df00ff;
+}
+.cm-s-default .cm-number {
+    color: #2effab;
+}
+.cm-s-default .cm-matchhighlight {
+    background-color: #757575;
+}
+.CodeMirror-cursor {
+    border-left: 1px solid #ffffff;
+}
+.tv_content {
+    background-color: #393939;
+}
+.CodeMirror-gutters {
+    border-right: 1px solid #3a3a3a;
+    background-color: #373737;
+}
+.tr_tabs_alt {
+    background-color: #595959 !important;
+}
+.script_tab_head>td {
+    background-color: #595959 !important;
+}
+.default .tv_selected {
+    background-color: #c8c8c8 !important;
+}
+table {
+    color: #fff;
+}
+a {
+    color: #ffffff;
+}
+.scripttable tr, .section, .actiontable {
+    background-color: #222222;
+}
+.scripttable tr, .section, .actiontable, .settingstr {
+    border-color: #555555;
+}
+.scripttable tr:hover {
+    background-color: #909090;
+}
+.greyed {
+    color: #9e9e9e !important;
+}

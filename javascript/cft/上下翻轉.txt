@@ -1,0 +1,1 @@
+javascript:(function(){var e=document.querySelectorAll("video");for(let i=0;i<e.length;i++){if(!e[i].paused){e[i].style.transform=="scaleY(-1)"?e[i].style.transform+=%22scaleY(1)%22:e[i].style.transform+=%22scaleY(-1)%22;}}})();

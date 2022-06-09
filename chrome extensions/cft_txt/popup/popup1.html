@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>cft</title>
+    <style>
+:root {
+    --bg: #ffffff;
+    --scrollbar-track: #303030;
+    --scrollbar-thumbh: #6c6c6c;
+    --scrollbar-thumb: #a1a1a1;
+    --scrollbar-corner: #ababab;
+    --clr1: black;
+    --btnh: #f0f0f0;
+}
+body {
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    background: var(--bg);
+}
+#rna {
+    background: transparent;
+    border: 2px var(--bg) solid;
+    outline: none;
+    padding: unset;
+    border-radius: 10px;
+    font-family: "Comic Sans MS", 標楷體;
+    font-size: 25px;
+    color: var(--clr1);
+    width: 130px;
+    height: 36px;
+    margin: 0 5px 0 5px;
+    white-space: pre;
+    resize: none;
+}
+svg.btn {
+    fill: var(--clr1);
+}
+#aqx>button {
+    background: transparent;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all .1s linear;
+}
+#aqx>button:hover {
+    background: var(--btnh);
+}
+#aqz {
+    height: 450px;
+    margin-top: 10px;
+    outline: 2px var(--clr1) solid;
+}
+#ipc {
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+}
+#ipc::-webkit-color-swatch {
+    border: 1px var(--clr1) solid;
+}
+::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background-color: var(--scrollbar-track);
+}
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--scrollbar-thumbh);
+}
+::-webkit-scrollbar-thumb {
+    background-color: var(--scrollbar-thumb);
+    border-radius: 10px;
+}
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+::-webkit-scrollbar-corner {
+    background-color: var(--scrollbar-corner);
+    border-radius: 2px;
+}
+    </style>
+  </head>
+  <body style="width:300px;height:500px;">
+		<div id="aqx" style="display: flex;">
+			<button title="go back" id="gbk">
+				<svg class="btn" width="20px" version="1.0" viewBox="0 0 512.000000 512.000000" style="position:relative;left: -1px;top: 2px;"><g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)"><path d="M2729 5050 c-31 -9 -2661 -1908 -2701 -1951 -31 -32 -34 -54 -16 -94 10 -23 710 -531 2461 -1787 274 -196 285 -201 338 -149 l29 29 0 531 0 530 88 -5 c48 -3 136 -12 195 -20 541 -74 977 -385 1117 -798 118 -347 10 -724 -301 -1046 -35 -36 -71 -76 -81 -90 -53 -74 27 -155 137 -137 68 11 342 225 511 398 324 333 514 695 590 1124 27 150 25 442 -4 595 -72 384 -232 708 -494 997 -397 438 -994 710 -1646 749 l-112 7 0 524 c0 572 0 571 -57 590 -15 6 -40 7 -54 3z"></path></g></svg>
+			</button>
+      <textarea type="text" id="rna" disabled></textarea>
+			<button title="rename" id="rme">
+			</button>
+			<button title="bg color" id="bgc">
+				<input type="color" id="ipc">
+			</button>
+			<button title="full page" id="fpg">
+				<svg class="btn" width="40px" style="position:relative;left: -6px;top: -1px;" version="1.1" viewBox="0 0 36 36"><path d="m 10,16 2,0 0,-4 4,0 0,-2 L 10,10 l 0,6 0,0 z"></path><path d="M 12,20 10,20 10,26 l 6,0 0,-2 -4,0 0,-4 0,0 z"></path><path d="m 20,10 0,2 4,0 0,4 2,0 L 26,10 l -6,0 0,0 z"></path><path d="m 24,24 -4,0 0,2 L 26,26 l 0,-6 -2,0 0,4 0,0 z"></path></svg>
+			</button>
+		</div>
+		<iframe id="aqz" frameborder="no" marginwidth="0" marginheight="0"></iframe>
+        <textarea id="sdl" style="top: -50px;z-index: -1;position: fixed;"></textarea>
+        <script src="popup1.js"></script>
+  </body>
+</html>

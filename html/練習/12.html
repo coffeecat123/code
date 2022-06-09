@@ -1,0 +1,15 @@
+<img id="output"/>
+<input type="file" accept="image/*" onchange="loadFile(event)">
+<script>
+  var loadFile = function(event) {
+    var output = document.getElementById('output');
+    output.src = URL.createObjectURL(event.target.files[0]);
+    output.onload = function() {
+      URL.revokeObjectURL(output.src) // free memory
+    }
+  };
+</script>
+<!-- oncontextmenu="return false" 禁止右鍵 --> 
+<!-- onselectstart="return false" 禁止複製==不可以選中文字 -->
+<!-- oncopy="return false;" 禁止複製==可以選中文字 -->
+<!-- ondragstart="return false" 禁止拖動圖片 -->

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>cft</title>
+    <style>
+:root {
+    --bg: #ffffff;
+    --scrollbar-track: #303030;
+    --scrollbar-thumbh: #6c6c6c;
+    --scrollbar-thumb: #ababab;
+    --scrollbar-corner: #ababab;
+    --clr1: black;
+    --btnh: #f0f0f0;
+    --oln: #ff0000;
+}
+body {
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    background: var(--bg);
+}
+* {
+    font-family: "Comic Sans MS", 標楷體;
+}
+#spn {
+    font-size: 26px;
+    color: var(--clr1);
+    width: 130px;
+    margin: 0 5px 0 5px;
+}
+svg.btn {
+    fill: var(--clr1);
+}
+svg.moon {
+    fill: var(--clr1);
+    left: 1px;
+    top: 2px;
+    position: relative;
+}
+svg.sun {
+    fill: var(--clr1);
+    stroke: var(--clr1);
+    left: 1px;
+    top: 2px;
+    position: relative;
+}
+#aqx>button {
+    background: transparent;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all .1s linear;
+}
+#aqx>button:hover {
+    background: var(--btnh);
+}
+#aqz {
+    height: 460px;
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    overflow-y: auto;
+    align-content: flex-start;
+}
+.tet{
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    background: transparent;
+    border: none;
+    outline: none;
+    margin: unset;
+    padding: unset;
+    border-radius: 10px;
+    font-family: "Comic Sans MS", 標楷體;
+    font-size: 25px;
+    width: 116%;
+    height: 101%;
+    left: -5px;
+    top: 0px;
+    white-space: pre;
+    resize: none;
+    position: relative;
+}
+.fle {
+    width: 86px;
+    height: 86px;
+    margin: 5px;
+    font-size: 26px;
+    border-radius: 10px;
+    white-space: pre;
+}
+.fle:hover {
+    box-shadow: 0px 0px 7px 3px #c4c4c4;
+}
+::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background-color: var(--scrollbar-track);
+}
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--scrollbar-thumbh);
+}
+::-webkit-scrollbar-thumb {
+    background-color: var(--scrollbar-thumb);
+    border-radius: 10px;
+}
+::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+}
+::-webkit-scrollbar-corner {
+    background-color: var(--scrollbar-corner);
+    border-radius: 2px;
+}
+    </style>
+  </head>
+  <body style="width:300px;height:500px;">
+		<div id="aqx" style="display: flex;">
+			<button title="full page" id="fpg">
+				<svg class="btn" width="40px" style="position:relative;left: -6px;top: -1px;" version="1.1" viewBox="0 0 36 36"><path d="m 10,16 2,0 0,-4 4,0 0,-2 L 10,10 l 0,6 0,0 z"></path><path d="M 12,20 10,20 10,26 l 6,0 0,-2 -4,0 0,-4 0,0 z"></path><path d="m 20,10 0,2 4,0 0,4 2,0 L 26,10 l -6,0 0,0 z"></path><path d="m 24,24 -4,0 0,2 L 26,26 l 0,-6 -2,0 0,4 0,0 z"></path></svg>
+			</button>
+      <span id="spn">cft</span>
+			<button title="mode" id="mde">
+			</button>
+			<button title="goto recycle bin" id="del">
+				<svg class="btn" width="26px" style="position:relative;left: 1px;top: 2px;" viewBox="0 0 24 24"><path d="M15 4V3H9v1H4v2h1v13c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V6h1V4h-5zm2 15H7V6h10v13z"></path><path d="M9 8h2v9H9zm4 0h2v9h-2z"></path></svg>
+			</button>
+			<button title="new" id="nee">
+				<svg class="btn" width="22px" style="position:relative;left: 0px;top: 2px;" version="1.1"viewBox="0 0 42 42"><polygon points="42,19 23,19 23,0 19,0 19,19 0,19 0,23 19,23 19,42 23,42 23,23 42,23 "/></svg>
+			</button>
+		</div>
+		<div id="aqz"></div>
+        <textarea id="sdl" style="top: -50px;z-index: -1;position: fixed;"></textarea>
+        <script src="popup.js"></script>
+  </body>
+</html>

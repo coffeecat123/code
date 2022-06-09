@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html style="width: 300px;">
+  <head>
+    <meta charset="UTF-8">
+    <title>cft</title>
+    <style>
+* {
+    font-family: "Comic Sans MS",標楷體;
+}
+body{
+  transition: all .3s linear;
+}
+.coffeecat button {
+	margin: 2px;
+	border: none !important;
+	text-align: center;
+	cursor: pointer;
+    color: var(--txt-color);
+	background: #8bc34a8a !important;
+	position: relative;
+	transition: all .3s linear;
+}
+.coffeecat button::before {
+	content: "";
+	width: 20%;
+	height: 20%;
+	box-sizing: border-box;
+	border-top: 1px solid var(--txt-color);
+	border-left: 1px solid var(--txt-color);
+	position: absolute;
+	top: 0;
+	left: 0;
+	transition: all .3s linear;
+}
+.coffeecat button::after {
+	content: "";
+	width: 20%;
+	height: 20%;
+	box-sizing: border-box;
+	border-bottom: 1px solid var(--txt-color);
+	border-right: 1px solid var(--txt-color);
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	transition: all .3s linear;
+}
+.coffeecat button:hover::before, .coffeecat button:hover::after {
+	width: 100%;
+	height: 100%;
+}
+    </style>
+  </head>
+  <body style="width:100px;height:200px;">
+    <input id="ipt" type="color">
+    <script src="popup.js"></script>
+  </body>
+</html>

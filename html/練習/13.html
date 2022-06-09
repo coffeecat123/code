@@ -1,0 +1,115 @@
+<html>
+    <head>
+        <style>
+            canvas{
+                position:absolute;z-index:2;
+            }
+            body{
+                background:url("https://i.ibb.co/FnHLLm9/1.png");
+            }
+        </style>
+    </head >
+    <body>
+        <canvas style="display:hidden" id="myCanvas"></canvas>
+        <pre style="font-size:20px">
+            dlvffdzv
+            dfbvfgxbv
+            gf
+            tgbsrtjesjbvlberbslvfd
+            vsdvdfbvkbdfjbvjbdfbjvd
+            dfvcndfjvbfjdvdf
+            vfd
+            fdv
+            fd
+                vdf
+rdfndvjdfv
+dfvjbdfkvbfd
+fdvdfvdf
+
+
+
+
+
+
+
+
+
+
+vdfjknvjdfnvdf
+vdjfvkdjfvdfj
+vkjfdnvdj
+        </pre>
+        <script>
+            let canvas = document.getElementById("myCanvas");
+            let a = canvas.getContext("2d");
+            canvas.width = window.innerWidth-30;
+            canvas.height = window.innerHeight*2;
+            qx=[];
+            qy=[];
+            qr=[];
+            qg=[];
+            qb=[];
+            z=0;
+            z1=0;
+            qz=50;
+            mx=0
+            my=0
+            let mouse = {
+                x : 0,
+                y : 0,
+            }
+			function createPat(){
+				var bg = cxt.createPattern(imgs,"no-repeat");
+				a.fillStyle = bg;
+				a.fillRect(0,0,can.width,can.height);
+			}
+            function rd(min,max){
+                return Math.floor(Math.random()*(max-min+1))+min;
+            };
+            window.addEventListener('mousemove',(event) => {
+                mx = event.pageX-8;
+                my = event.pageY-7;
+            })
+            const draw = () =>{
+                //先清掉cvanvas目前繪製的圖形
+                a.clearRect(0, 0, canvas.width, canvas.height);
+                //開始作畫
+                a.strokeStyle="rgba(255,0,0)";
+                if(z%5==0){
+                    a.moveTo(mx,my);
+                    qx[z/5%qz]=mx+rd(-100,100);
+                    qy[z/5%qz]=my+rd(-100,100);
+                    qr[z/5%qz]=rd(0,255);
+                    qg[z/5%qz]=rd(0,255);
+                    qb[z/5%qz]=rd(0,255);
+                    a.lineTo(qx[z/5%qz],qy[z/5%qz]);
+                }
+                if(z<qz){
+                    z1=z;
+                }
+                else{
+                    z1=qz-1;
+                }
+                for(k=0;k<z1;k++){
+                    a.beginPath();
+                    a.strokeStyle="rgba("+qr[k]+","+qg[k]+","+qb[k]+",0.5)";
+                    a.moveTo(mx,my);
+                    a.lineTo(qx[k],qy[k]);
+                    a.stroke();
+                }
+                z++;
+            }
+            const az = () =>{
+                a.clearRect(0, 0, canvas.width, canvas.height);
+                a.fillStyle = "#fff"
+                for(i=0;i<100;i++){
+                    a.beginPath();
+                    a.arc(rd(0,canvas.width),rd(0,canvas.height),rd(1,2),0,Math.PI*2);
+                    a.fill()
+                }
+            }
+            setInterval('draw()',0)
+            //setInterval('az()',0)
+        </script>
+    </body>
+</html>

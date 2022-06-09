@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>cft</title>
+    <style>
+:root {
+    --bg: #ffffff;
+    --clr1: black;
+    --hrt: transparent;
+    --scrollbar-track: #303030;
+    --scrollbar-thumbh: #6c6c6c;
+    --scrollbar-thumb: #ababab;
+    --scrollbar-corner: #ababab;
+}
+body {
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    background: var(--hrt);
+    color: var(--clr1);
+    font-family: "Comic Sans MS", 標楷體;
+}
+.tet{
+    color: var(--clr1);
+    font-size: 30px;
+    width: 100%;
+    height: 100%;
+    white-space: pre;
+    background: transparent;
+    border: none;
+    outline: none;
+    margin: unset;
+    padding: unset;
+    font-family: "Comic Sans MS", 標楷體;
+    resize: none;
+}
+::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background-color: var(--scrollbar-track);
+}
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--scrollbar-thumbh);
+}
+::-webkit-scrollbar-thumb {
+    background-color: var(--scrollbar-thumb);
+    border-radius: 10px;
+}
+::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+}
+::-webkit-scrollbar-corner {
+    background-color: var(--scrollbar-corner);
+    border-radius: 2px;
+}
+    </style>
+  </head>
+  <body style="width: 150px;height: 200px;">
+    <textarea class="tet" disabled></textarea>
+    <script src="q.js"></script>
+  </body>
+</html>

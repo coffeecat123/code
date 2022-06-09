@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>^_^</title>
+  <style>
+input[type="range"] {
+  margin: unset;
+  outline: none;
+  -webkit-appearance: none;
+  width: var(--wi);
+  height: 7px;
+  background: rgb(164 164 164);
+  border-radius: 5px;
+}
+input[type=range]::-webkit-slider-runnable-track  {
+  -webkit-appearance: none;
+}
+.bk {
+  pointer-events: none;
+  position: absolute;
+  width: var(--wi);
+  height: 7px;
+  background: linear-gradient(45deg, rgb(128 0 255), rgb(255 0 128));
+  border-radius: 5px;
+  top: 14px;
+  background-size: 50% 100%;
+  background-repeat: no-repeat;
+}
+.cr {
+  pointer-events: none;
+  position: absolute;
+  background: #f3f3f3;
+  border: 2px #00ff05 solid;
+  width: 11px;
+  height: 11px;
+  border-radius: 10px;
+  top: 10px;
+  left: 100px;
+}
+body {
+    background: black;
+}
+.d2{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#spn{
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    font-family: Segoe Script,fantasy;
+    font-size: 30px;
+    background: -webkit-linear-gradient(bottom,red,yellow);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+  </style>
+</head>
+
+<body>
+  <div>
+    <input id="ipt" type="range" step="1" value="100" autofocus>
+    <div class="bk"></div>
+    <div class="cr"></div>
+  </div>
+  <div class="d2"><span id="spn">100%</span></div>
+  <script src="popup.js"></script>
+</body>
+</html>

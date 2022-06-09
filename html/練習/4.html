@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<style>
+    p{
+        background-color: rgb(255, 242, 0);
+    }
+    img {
+        filter: hue-rotate(90deg);
+    }
+</style>
+    <head>
+        <p><input type="text" id='hamNumId'>+<input type="text" id='cokeNumId'>=<em><b id='totalId'></b></em></p>
+        <button id='countId'>計算</button>
+        <script type="text/javascript">
+            document.getElementById('countId').onclick = function(){
+                document.getElementById('totalId').textContent = parseInt(document.getElementById('hamNumId').value)+parseInt(document.getElementById('cokeNumId').value);
+            }
+        </script>
+    </head>
+    <body>
+        <div style="color:#FFBB73">CSS background-color 色碼測試</div>
+        <div style="background-color:pink">CSS background-color 顏色英文單字測試</div>
+        <div style="background-color:rgb(232,106,192)">CSS background-color RGB 測試</div>
+
+        <p><input type="text" id='asdw'></p>
+
+        <script>
+        function myFunction1()
+        {
+            x=document.getElementById("anc1") // 找到元素
+            x.style.color="#0000ff";          // 改变样式
+        }
+        </script>
+        <button id="anc1" type="button" onclick="myFunction1()">点击这里</button>
+        <script>
+        function myFunction2()
+        {
+            x=document.getElementById("anc2") // 找到元素
+            x.style.color="#00ff00";          // 改变样式
+        }
+        </script>
+        <button id="anc2" type="button" onclick="myFunction2()">点击这里</button>
+        <script>
+        function myFunction3()
+        {
+            x=document.getElementById("anc3") // 找到元素
+            x.style.color="#ff0000";          // 改变样式
+        }
+        </script>
+        <button id="anc3" type="button" onclick="myFunction3()">点击这里</button>
+
+        <script type="text/JavaScript">
+        function reP(){
+        document.getElementById('oImg').style="display:block";
+        document.getElementById('dbgd').style="display:none";
+        }
+        </script>
+        <img src='https://i.ibb.co/kVncHJy/207572720-1528218177531947-5937353691491385911-n.jpg' id="oImg" style='display:none'>
+        <input id='dbgd' type="button" value='顯示圖片' onclick="reP()">
+    </body>
+</html>

@@ -1,0 +1,30 @@
+{
+  "name": "cft_txt",
+  "description": "^_^",
+  "version": "1.0.0",
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": [
+      "contextMenus",
+      "storage",
+      "activeTab",
+      "scripting"
+  ],
+  "action": {
+    "default_popup": "/popup/popup.html",
+    "default_icon": {
+      "16": "/images/cft_16.png",
+      "32": "/images/cft_32.png",
+      "48": "/images/cft_48.png",
+      "128": "/images/cft_128.png"
+    }
+  },
+  "icons": {
+    "16": "/images/cft_16.png",
+    "32": "/images/cft_32.png",
+    "48": "/images/cft_48.png",
+    "128": "/images/cft_128.png"
+  }
+}

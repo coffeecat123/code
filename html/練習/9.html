@@ -1,0 +1,225 @@
+<script language="JavaScript">
+    CoLoUrS=new Array('00ff00','ff00ff','fff000','3366ff');
+    
+    var step=0.3,a_StEp=0.05,RunTime=0,currStep=0,Xpos=0,Ypos=0,cntr=70,count_a=0;
+    var count=0,move=1,Ay=0,Ax=0,dots=16;var x;brwsr=(document.layers)?1:0;
+    if (brwsr){
+    for (i=0; i < dots; i++){
+    document.write('<LAYER NAME="a'+i+'" LEFT=0 TOP=0 BGCOLOR=#3366ff CLIP="0,0,3,3"></LAYER>');
+    }
+    window.captureEvents(Event.MOUSEMOVE);
+    function nsMouse(evnt){
+     Xpos = evnt.pageX;
+     Ypos = evnt.pageY;
+     }
+    window.onMouseMove = nsMouse
+    }
+    else{
+    document.write('<div id="ys" style="position:absolute;top:0px;left:0px"><div style="position:relative">');
+    for (i=0; i < dots; i++){
+    document.write('<div id="ieDivs" style="position:absolute;top:0px;left:0px;width:3px;height:3px;background:#3366ff;font-size:3px"></div>');
+    }
+    document.write('</div></div>');
+    function ieMouse(){
+     Ypos=event.y;
+     Xpos=event.x;
+     }
+    window.document.onmousemove = ieMouse
+    }
+    
+    function MouseFollow(){
+    ay = Math.round(Ay+=(Ypos- Ay)* 4/40);
+    ax = Math.round(Ax+=(Xpos- Ax)* 4/40);
+    setTimeout('MouseFollow()',10);
+    }
+    
+    function colourStep(){
+    count+=move;
+    if (count >= dots) {count=0;count_a+=move}
+    if (count_a == CoLoUrS.length) count_a=0;
+    if (brwsr) document.layers["a"+count].bgColor=CoLoUrS[count_a];
+    else ieDivs[count].style.background=CoLoUrS[count_a];
+    setTimeout('colourStep()',100)
+    }
+    
+    function TwistnSpin(){
+    if (!brwsr) ys.style.top=document.body.scrollTop;
+    for (i=0; i < dots; i++) 
+     {
+     var allLayers=(document.layers)?document.layers["a"+i]:ieDivs[i].style;
+     allLayers.top=ay+cntr*Math.cos((currStep+i*4)/10.2)*Math.sin(currStep/20);
+     allLayers.left=ax+cntr*Math.sin((currStep+i*4)/10.2)*Math.cos(1+currStep/20);
+     }
+    currStep-=step;
+    setTimeout("TwistnSpin()",10);
+    }
+    function CombineNstart(){
+    MouseFollow();TwistnSpin();colourStep();
+    }
+    window.onload=CombineNstart;
+    </script>
+    
+<html>
+<head>
+</head>
+<body oncontextmenu=window.event.returnValue=false>
+<a onmouseover="alert('都叫您不要指了您還指呀！')">
+        <font size="3">我最痛恨別人指著我</font></a>
+<a href="javascript:close();">關閉視窗</a>
+
+<script language="JavaScript">
+    var currentcolor = 0
+    var bgcolors = new Array(16)
+    bgcolors[0]="FFFFFF"
+    bgcolors[1]="EEEEEE"
+    bgcolors[2]="DDDDDD"
+    bgcolors[3]="CCCCCC"
+    bgcolors[4]="BBBBBB"
+    bgcolors[5]="AAAAAA"
+    bgcolors[6]="999999"
+    bgcolors[7]="888888"
+    bgcolors[8]="777777"
+    bgcolors[9]="666666"
+    bgcolors[10]="555555"
+    bgcolors[11]="444444"
+    bgcolors[12]="333333"
+    bgcolors[13]="222222"
+    bgcolors[14]="111111"
+    bgcolors[15]="000000"
+    function backgroundChanger() 
+    {
+    document.bgColor = bgcolors[currentcolor];
+    if (currentcolor < bgcolors.length-1) 
+    {
+    currentcolor=currentcolor + 1
+    setTimeout("backgroundChanger()",100);
+    }
+    }
+    backgroundChanger();
+    </script>
+<script language="JavaScript">
+    var currentcolor = 0
+    
+    function initArray(n) {
+      this.length = n;
+      for (var i =1; i <= n; i++) {
+        this[i] = ' '
+      }
+    }
+    
+    bgcolors = new initArray(15)
+    bgcolors[0]="000000" //bgcolors[0]="ffffff"可以設定自己喜歡顏色的十六進位值 
+    bgcolors[1]="ffdead"
+    bgcolors[2]="ffffff"
+    bgcolors[3]="add8e6"
+    bgcolors[4]="0000ff"
+    bgcolors[5]="add8e6"
+    bgcolors[6]="90ee90"
+    bgcolors[7]="00ff00"
+    bgcolors[8]="90ee90"
+    bgcolors[9]="ffc0cb"
+    bgcolors[10]="ff0000"
+    bgcolors[11]="ffc0cb"
+    bgcolors[12]="FFFFFF"
+    bgcolors[13]="ffdead"
+    bgcolors[14]="000000"
+    
+    function backgroundChanger() {
+    document.bgColor = bgcolors[currentcolor];
+    
+    if (currentcolor < bgcolors.length-1) {
+    currentcolor++
+    setTimeout("backgroundChanger()", 100);
+    }
+    }
+    
+    backgroundChanger();
+    
+    </script>
+
+    
+</body>
+<script language="JavaScript">
+    org_Color=document.bgColor.substring(1.10)
+    </script>
+    <FORM>
+    選擇背景色：
+    <SELECT onChange="document.bgColor=this.options[this.selectedIndex].value">
+    <OPTION>-請選擇-</OPTION>
+    <OPTION VALUE="#FFEAD5">淡橙</OPTION>
+    <OPTION VALUE="#FFFF00">黃色</OPTION>
+    <OPTION VALUE="#80FF00">綠色</OPTION>
+    <OPTION VALUE="#FF00FF">紫色</OPTION>
+    <OPTION VALUE="#000000">黑色</OPTION>
+    <OPTION VALUE="#EEEEEE">灰色</OPTION>
+    <OPTION VALUE="#FFFFFF">白色</OPTION>
+    </SELECT></FORM>
+    <script language="Javascript">
+
+        
+        
+        var background = "https://i.ibb.co/kVncHJy/207572720-1528218177531947-5937353691491385911-n.jpg";
+        
+        var speed = 0;
+        
+        
+        browserName = navigator.appName;
+        
+        browserVer = parseInt(navigator.appVersion);
+        
+        
+        if (browserName != "Netscape" || browserVer >= 4.5) {
+        
+        
+        function moveback(movert,movedn,hPos,vPos) {
+        
+         
+          if (arguments[4])
+        
+            document.body.style.backgroundImage = "url(\"" + arguments[4] + "\")";
+        
+         
+        
+          if (arguments[5])
+        
+            document.body.style.backgroundRepeat = arguments[5]
+        
+         
+        
+          if (!isNaN(hPos)) {
+        
+            if ((movert!=0) && (hPos>0)) hPos=-100000
+        
+            hPos += movert
+        
+          } 
+        
+          if (!isNaN(vPos)) {
+        
+            if ((movedn!=0) && (vPos>0)) vPos=-100000
+        
+            vPos+= movedn
+        
+          }
+        
+         
+        
+          document.body.style.backgroundPosition= hPos + " " + vPos
+        
+          if (isNaN(hPos))  hPos = "\"" + hPos + "\""
+        
+          if (isNaN(vPos)) vPos = "\"" + vPos + "\""
+        
+        setTimeout("moveback("+movert+","+movedn+","+hPos+","+vPos+")",speed)
+        
+        }
+        
+        
+        moveback(1,1,0,0, background);
+        
+        }
+        
+        </script>
+        
+        
+</html>

@@ -1,0 +1,1 @@
+javascript:(function(){var a="";for(let i=0;i<document.querySelectorAll(".Zmm6We").length;i++){    a+=document.querySelectorAll(".Zmm6We")[i].innerText+'\n';}console.log(a);var b=document.createElement("textarea");b.textContent=a;document.body.append(b);b.select();document.execCommand("copy");b.remove();})();
