@@ -16,7 +16,7 @@
 
 ```js
 javascript:(function() {
-    console.log("coffeecat");
+    alert("coffeecat");
 })();
 ```
 </details>
