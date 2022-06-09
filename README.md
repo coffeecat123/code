@@ -10,7 +10,7 @@
 * reg
 * tempermonkey
 
-[Download](https://codeload.github.com/coffeecat123/code/zip/refs/heads/main?token=AVHBH7WQJFMZ527DWFGP6WLCUFFMW)
+[Download](https://codeload.github.com/coffeecat123/code/zip/refs/heads/main)
 
 <details><summary>CLICK ME</summary>
 
