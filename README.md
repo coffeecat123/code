@@ -12,12 +12,11 @@
 
 [Download](https://codeload.github.com/coffeecat123/code/zip/refs/heads/main)
 
-<details><summary>CLICK ME</summary>
+<details><summary>bookmark</summary>
 
 ```js
-alert("a");
-function a(){
-  let b=0;
-}
+javascript:(function() {
+    console.log("coffeecat");
+})();
 ```
 </details>
