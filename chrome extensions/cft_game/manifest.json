@@ -1,5 +1,5 @@
 {
-  "name": "cft",
+  "name": "cft_game",
   "description": "^_^",
   "version": "1.0.0",
   "manifest_version": 3,
@@ -11,16 +11,6 @@
       "storage",
       "activeTab",
       "scripting"
-  ],
-  "content_scripts": [
-    {
-      "matches": [
-        "<all_urls>"
-      ],
-      "run_at": "document_end",
-      "js": ["content.js"],
-      "all_frames": true
-    }
   ],
   "action": {
     "default_popup": "popup.html",
