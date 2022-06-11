@@ -59,12 +59,6 @@ _clr.style="width: 40px;";
 chrome.storage.sync.get(["bk"], (e) => {
   document.body.style.background=e.bk;
   _clr.value=e.bk;
-    if((parseInt(_clr.value.substring(1,3),16)+parseInt(_clr.value.substring(3,5),16)+parseInt(_clr.value.substring(5,7),16))/3>128){
-        root.style.cssText+='--txt-color: #000;';
-    }
-    else{
-        root.style.cssText+='--txt-color: #fff;';
-    }
 });
 var root = document.querySelector(':root');
 if((parseInt(_clr.value.substring(1,3),16)+parseInt(_clr.value.substring(3,5),16)+parseInt(_clr.value.substring(5,7),16))/3>128){
