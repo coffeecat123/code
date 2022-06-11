@@ -1,6 +1,6 @@
 let ipt=document.querySelector("#ipt");
 chrome.storage.sync.get(["color"], (e)=>{
-  ipt.value=e.color;
+    ipt.value=e.color;
 });
 var _dv=[
         ["vol all >100%", (function() {let _clr = ["#fff", "#000c", "#00a2ff", "#f00"];if (document.querySelectorAll(".vlm_cft").length > 0) return;let _a = document.createElement("input"),_b = document.createElement("div"),_c = document.createElement("b"),_d = document.createElement("buttn");let _ab = 1;let _mda = 0;let _qa = [`<svg xmlns="http://www.w3.org/2000/svg"width="20"height="20"><svg viewBox="-15 -15 330 330"><path fill="${_clr[0]}"d="m78.90065,233.69882l83.51689,-83.51643l-83.51689,-83.51703l47.73413,-47.72898l131.26115,131.24601l-131.26115,131.28673"></path></svg></svg>`, `<svg xmlns="http://www.w3.org/2000/svg"width="20"height="20"><svg viewBox="-15 -15 330 330"><path fill="${_clr[0]}"d="m225.55086,67.20994l-84.74785,84.74276l84.74785,84.74268l-48.43251,48.45847l-133.18028,-133.20114l133.18028,-133.21132"></path></svg></svg>`];_a.type = "range";_a.min = 0;_a.max = 1000;_a.step = 1;_a.width = 100;_b.className = "vlm_cft";
