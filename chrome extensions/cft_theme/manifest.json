@@ -1,12 +1,12 @@
 {
    "description": "?..",
-   "manifest_version": 2,
+   "manifest_version": 3,
    "name": "cft_theme",
    "version": "1.1",
    "theme": {
       "colors": {
-         "button_background":[50,50,50],
-         "bookmark_text": [ 255,160,220],
+         "button_background":[30,30,30],
+         "bookmark_text": [ 255,255,255],
          "frame": [ 0, 0, 0 ],
          "ntp_background": [ 50, 50, 50 ],
          "background_tab": [ 30, 30, 30 ],

@@ -6,9 +6,10 @@ let data={},//[name,[bgcolor,content]]
 
 chrome.runtime.onInstalled.addListener(() => {
   chrome.storage.local.get(['trash','data','dark'], function(result) {
-    if(result.data==undefined){
-      chrome.storage.local.set({htcr,trash,durl,data,dark});
-    }
+    if(result.data!=undefined)data=result.data;
+    if(result.dark!=undefined)dark=result.dark;
+    if(result.durl!=undefined)durl=result.durl;
+    if(result.trash!=undefined)trash=result.trash;
   });
 });
 chrome.storage.onChanged.addListener(function(changes, namespace) {
