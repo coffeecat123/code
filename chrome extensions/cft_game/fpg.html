@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html style="width: 300px;">
+<html>
   <head>
     <meta charset="UTF-8">
     <title>cft</title>
@@ -10,9 +10,13 @@
 body{
   transition: all .3s linear;
 }
+#cvs{
+  background-color: black;
+}
     </style>
   </head>
-  <body style="width:100px;height:200px;">
-    <script src="popup.js"></script>
+  <body style="margin: 0;">
+    <canvas id="cvs" style="z-index: -1;top: 0px;left: 0px;position: fixed;width: 100%;height: 100%;"></canvas>
+    <script src="fpg.js"></script>
   </body>
 </html>

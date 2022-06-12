@@ -5,7 +5,7 @@
    "version": "1.1",
    "theme": {
       "colors": {
-         "button_background":[30,30,30],
+         "button_background":[0,0,0],
          "bookmark_text": [ 255,255,255],
          "frame": [ 0, 0, 0 ],
          "ntp_background": [ 50, 50, 50 ],
