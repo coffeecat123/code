@@ -10,6 +10,7 @@ chrome.runtime.onInstalled.addListener(() => {
     if(result.dark!=undefined)dark=result.dark;
     if(result.durl!=undefined)durl=result.durl;
     if(result.trash!=undefined)trash=result.trash;
+    chrome.storage.local.set({trash,data,dark});
   });
 });
 chrome.storage.onChanged.addListener(function(changes, namespace) {
