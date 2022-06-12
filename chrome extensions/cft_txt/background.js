@@ -5,7 +5,7 @@ let data={},//[name,[bgcolor,content]]
     trash=[];//[name,[bgcolor,content,time]]
 
 chrome.runtime.onInstalled.addListener(() => {
-  chrome.storage.local.get(['trash','data','dark'], function(result) {
+  chrome.storage.local.get(['durl','htcr','trash','data','dark'], function(result) {
     if(result.data!=undefined)data=result.data;
     if(result.dark!=undefined)dark=result.dark;
     if(result.htcr!=undefined)htcr=result.htcr;
