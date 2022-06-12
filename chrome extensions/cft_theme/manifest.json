@@ -6,7 +6,7 @@
    "theme": {
       "colors": {
          "button_background":[0,0,0],
-         "bookmark_text": [ 255,255,255],
+         "bookmark_text": [ 230,230,230],
          "frame": [ 0, 0, 0 ],
          "ntp_background": [ 50, 50, 50 ],
          "background_tab": [ 30, 30, 30 ],
