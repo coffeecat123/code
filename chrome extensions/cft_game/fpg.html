@@ -31,8 +31,14 @@ body{
 }
 #hrt>svg{
     fill:var(--hrt);
+    transition: all 0.2s linear;
 }
-button {
+#hrt>svg:hover {
+    left: -2.3px !important;
+    top: 3.6px !important;
+    width: 35px;
+}
+#hrt {
     z-index: 100;
     position: absolute;
     background: transparent;
@@ -43,9 +49,6 @@ button {
     border-radius: 20px;
     cursor: pointer;
     transition: all .1s linear;
-}
-button:hover {
-    background: #80808080;
 }
     </style>
   </head>
