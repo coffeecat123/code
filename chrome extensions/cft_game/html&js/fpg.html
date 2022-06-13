@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>cft</title>
+    <title>color game</title>
     <style>
 :root {
     --hrt: transparent;
@@ -11,17 +11,19 @@ html{
     background-color: #000000;
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 body{
   margin: unset;
   width: 75vh;
   height: 100vh;
-  background-color: #181818;
 }
 #cvs{
+    background: #181818;
+    transform-origin: 0px 0px;
     position: absolute;
-    width: 75vh;
-    height: 100vh;
+    /* width: 75vh; */
+    /* height: 100vh;*/
 }
 #spn {
     font-size: 26px;
@@ -55,7 +57,7 @@ body{
     <button title="heart" id="hrt">
       <svg width="27px" style="position:relative;left: 0.7px;top: 2.3px;"viewBox="0 0 512 512" version="1.0"><g transform="translate(0,512) scale(0.1,-0.1)"><path d="M1220 4763 c-459 -70 -834 -351 -1053 -788 -61 -123 -103 -244 -134 -394 -23 -109 -26 -150 -27 -311 0 -156 3 -202 22 -290 65 -300 214 -605 445 -913 231 -307 611 -686 1002 -998 280 -224 696 -516 936 -658 137 -81 160 -82 285 -8 551 328 1231 868 1622 1287 453 486 692 894 779 1329 27 132 24 402 -5 549 -93 465 -368 851 -751 1050 -120 63 -180 86 -306 118 -136 35 -375 44 -515 20 -161 -28 -357 -103 -484 -184 -156 -100 -323 -261 -418 -403 -29 -43 -55 -79 -58 -79 -3 0 -30 37 -60 83 -72 108 -260 296 -370 369 -165 109 -342 181 -526 213 -79 14 -316 19 -384 8z"/></g></svg>
     </button>
-		<canvas id="cvs"></canvas>
+		<canvas id="cvs" width="3072" height="4096"></canvas>
     <script src="fpg.js"></script>
   </body>
 </html>
