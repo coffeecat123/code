@@ -2,59 +2,52 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>cft</title>
+    <title>color game</title>
     <style>
-:root {
-    --bg: #181818;
-    --clr1: #ffffff;
-    --btnh: #969696;
+:root{
+    --bh: 500px;
 }
-* {
-  font-family: "Comic Sans MS",標楷體;
+html{
+    background-color: #000000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 body{
-  background-color: var(--bg);
-  transition: all .3s linear;
+  width: calc(var(--bh) * 3 / 4);
+  height: var(--bh);
+  margin: unset;
 }
 #cvs{
-  z-index: -1;
-  top: 0px;
-  left: 0px;
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  background-color: var(--bg);
-}
-#spn {
-    font-size: 26px;
-    color: var(--clr1);
-    margin: 0 5px 0 5px;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
 }
 svg{
-    fill: var(--clr1);
+    fill: #ffffff;
 }
-#aqx>button {
-    background: transparent;
-    border: none;
+button#fpg {
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 40px;
     height: 40px;
+    z-index: 100;
+    background: transparent;
+    border: none;
     border-radius: 20px;
-    cursor: pointer;
-    transition: all .1s linear;
+    outline: none;
 }
-#aqx>button:hover {
-    background: var(--btnh);
+button#fpg:hover {
+    background: #888888;
 }
     </style>
   </head>
-  <body style="width:300px;height:200px;margin: 0;">
-		<div id="aqx" style="display: flex;">
-      <button title="full page" id="fpg">
-        <svg class="btn" width="40px" style="position:relative;left: -6px;top: -1px;" version="1.1" viewBox="0 0 36 36"><path d="m 10,16 2,0 0,-4 4,0 0,-2 L 10,10 l 0,6 0,0 z"></path><path d="M 12,20 10,20 10,26 l 6,0 0,-2 -4,0 0,-4 0,0 z"></path><path d="m 20,10 0,2 4,0 0,4 2,0 L 26,10 l -6,0 0,0 z"></path><path d="m 24,24 -4,0 0,2 L 26,26 l 0,-6 -2,0 0,4 0,0 z"></path></svg>
-      </button>
-      <span id="spn">cft</span>
-		</div>
-		<div id="aqz"><canvas id="cvs"></canvas></div>
+  <body>
+    <button title="full page" id="fpg">
+      <svg class="btn" width="40px" style="position:relative;left: -6px;top: -1px;" version="1.1" viewBox="0 0 36 36"><path d="m 10,16 2,0 0,-4 4,0 0,-2 L 10,10 l 0,6 0,0 z"></path><path d="M 12,20 10,20 10,26 l 6,0 0,-2 -4,0 0,-4 0,0 z"></path><path d="m 20,10 0,2 4,0 0,4 2,0 L 26,10 l -6,0 0,0 z"></path><path d="m 24,24 -4,0 0,2 L 26,26 l 0,-6 -2,0 0,4 0,0 z"></path></svg>
+    </button>
+		<canvas id="cvs" width="3072" height="4096"></canvas>
     <script src="popup.js"></script>
   </body>
 </html>

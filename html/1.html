@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>canvas画四边形</title>
+</head>
+ 
+<body>
+    <div>
+        <canvas id="canvas" width="400" height="600"></canvas>
+    </div>
+    <script>
+ 
+        window.onload = function () {
+            var canvas = document.getElementById('canvas')
+            context = canvas.getContext('2d')
+            drawRects()
+            canvas.onmousedown = clickPoint;
+            canvas.onmouseup = stopDragging;
+            canvas.onmousemove = dragCircle
+            canvas.onmouseout = stopDragging;
+        }
+ 
+        var points = {
+            rect1: [
+                { x: 20, y: 20, isSelected: false },
+                { x: 220, y: 20, isSelected: false },
+                { x: 220, y: 230, isSelected: false },
+                { x: 20, y: 220, isSelected: false },
+            ],
+            rect2: [
+                { x: 10, y: 10, isSelected: false },
+                { x: 320, y: 10, isSelected: false },
+                { x: 320, y: 320, isSelected: false },
+                { x: 10, y: 320, isSelected: false },
+            ]
+        }
+ 
+        // 画图
+        function drawRect(Array) {
+            // 设置线的样式
+            // context.setLineDash([4, 2])
+            // 设置连线点样式
+            context.lineJoin  = 'round'
+            context.beginPath()
+            // 遍历坐标点
+            for (let i = 0; i < Array.length; i++) {
+                const ele = Array[i];
+                if (i < 1) {
+                    context.moveTo(ele.x, ele.y);
+                } else {
+                    context.lineTo(ele.x, ele.y);
+                }
+            }
+            context.lineWidth = 3;
+            // 判断显示不同颜色的四边形
+            if(Array == points.rect1){
+                context.strokeStyle ='red'
+            }else{
+                context.strokeStyle ='green'
+            }
+            // 随机颜色
+            // context.strokeStyle = '#'+(Math.random()*0xffffff<<0).toString(16); 
+            context.closePath();
+            context.stroke();
+        }
+ 
+        // 画点连线
+        function drawRects() {
+            // 清除画布，准备绘制
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            drawRect(points.rect1)
+            drawRect(points.rect2)
+        }
+ 
+        // 遍历元素在哪一个圆上
+        var  selectObject
+        function circle(Array, clientX, clientY) {
+            for (let i = 0; i < Array.length; i++) {
+                const ele = Array[i];
+                // Math.abs返回绝对值
+                // Math.sqrt返回一个数的平方根
+                // Math.pow幂函数运算
+                var line = Math.abs(Math.sqrt(Math.pow((ele.x - clientX), 2) + Math.pow((ele.y - clientY), 2)))
+                // 判断点击的位置在哪一个圆里面
+                if (line - 5 < 0) {
+                    ele.isSelected = true
+                    isDragging = true
+                    selectObject = Array[i]
+                } else {
+                    ele.isSelected = false
+                }
+                
+            }
+        }
+ 
+        // Canvas点击事件
+        // 遍历所有的坐标点
+        function clickPoint(e) {
+            // 屏幕事件
+            var ev = window.event || ev;
+            // 判断屏幕，减去屏幕中的偏移量
+            //offsetLeft会受父级的position属性影响,同理offsetTop也会
+            var clientX = ev.clientX - this.offsetLeft; 
+            var clientY = ev.clientY - this.offsetTop;
+            circle(points.rect1, clientX, clientY)
+            circle(points.rect2, clientX, clientY)
+        }
+ 
+        var isDragging = false
+        function dragCircle(e) {
+            // 判断是否可以拖动
+            if (isDragging == true) {
+                 // 取得画布上被点击的点
+                //offsetLeft会受父级的position属性影响,同理offsetTop也会
+                var clickX = e.pageX - canvas.offsetLeft;
+                var clickY = e.pageY - canvas.offsetTop;
+                selectObject.x = clickX
+                selectObject.y = clickY
+                drawRects()
+            }
+        }
+ 
+        // 停止拖动事件
+        function stopDragging() {
+            isDragging = false
+            // 鼠标结束时的坐标
+            console.log(points)
+        }
+ 
+ 
+    </script>
+</body>
+ 
+</html>
