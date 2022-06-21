@@ -35,9 +35,13 @@ svg#svg1{
     display: flex;
     flex-direction: row;
     align-items: center;
+    margin-bottom: 10px;
 }
 #div{
 	transform-origin: 0px 0px;
+}
+img{
+    margin-right: 16px;
 }
     </style>
 </head>
@@ -130,7 +134,7 @@ svg#svg1{
 			    else scl+=scm;
 			    scl=Number(scl.toFixed(2));
 			    if(scl<=scm)scl=scm;
-			    div.style.transform=`scale(${scl})`;
+			    div.style.zoom=scl;
 			}
 		};
 		const keyCodeMap = {
