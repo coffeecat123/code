@@ -53,6 +53,7 @@ svg#svg1{
     <script>
         var ifl={};
         var img=[];
+        var trh=[];
         var idx=0;
         var scl=1,scm=0.02;
         var ipt=document.querySelector("#ipt");
@@ -83,20 +84,44 @@ svg#svg1{
             reader.readAsDataURL(file);
         }
         document.onkeydown=(k)=>{
-            if(img.length<=1)return;
             if(k.code=="ArrowRight"){
-                let w=img[idx].img;
-                let m=img[idx].name;
+                if(img.length<=1)return;
                 idx=(idx+img.length+1)%img.length;
                 div.replaceChild(img[idx].img,div.firstChild);
                 upd();
             }
             if(k.code=="ArrowLeft"){
-                let w=img[idx].img;
-                let m=img[idx].name;
+                if(img.length<=1)return;
                 idx=(idx+img.length-1)%img.length;
                 div.replaceChild(img[idx].img,div.firstChild);
                 upd();
+            }
+            if(k.code=="Delete"){
+                if(img.length==0)return;
+                trh.push(img[idx]);
+                if(img.length==1)
+                {
+                    img=[];
+                    ifl={};
+                    div.innerHTML="";
+                    return;
+                }
+                img.splice(idx,1);
+                if(idx==img.length)idx--;
+                div.replaceChild(img[idx].img,div.firstChild);
+                upd();
+            }
+            if(k.code=="KeyZ"){
+                if(trh.length==0)return;
+                let _img=trh.pop();
+                img.push(_img);
+                idx=img.length-1;
+                if(div.innerHTML==""){
+                    div.append(_img.img);
+                }
+                else{
+                    div.replaceChild(_img.img,div.firstChild);
+                }
             }
         };
 		div.onwheel=(e)=>{
@@ -144,7 +169,12 @@ svg#svg1{
 		});
         setInterval(upd,100);
         function upd(){
-            if(img.length==0)return;
+            if(img.length==0)
+            {
+                spn.textContent="upload some image";
+                document.title="cft";
+                return;
+            }
             let w=img[idx].img;
             let m=img[idx].name;
             let a=`${m} (${w.width}×${w.height}) [${idx+1}/${img.length}]`;
