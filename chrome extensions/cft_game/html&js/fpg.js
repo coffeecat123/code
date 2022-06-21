@@ -26,7 +26,7 @@ function start(){
   let evl=[];
   let bkcr="#181818";
   let ra=100;
-  let tma=5;
+  let tma=30,gdd=0.25;
   let pa={
     x:-ra*2,
     y:-ra*2
@@ -195,7 +195,7 @@ function start(){
         }
         if (ctx.isPointInPath(cr, x, y)) {
           cvs.removeEventListener('click',qi);
-          tm1+=0.25*1000;
+          tm1+=gdd*1000;
           nxlv();
         }
       });
