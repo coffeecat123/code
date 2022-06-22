@@ -50,7 +50,7 @@ function loin() {
     aqw.innerHTML = result.data[id][1];
     chcr(result.data[id][0]);
     scl=result.data[id][2]
-    aqw.style.transform=`scale(${scl})`;
+    aqw.style.zoom=scl;
     start();
     aqw.setAttribute("contenteditable", "");
   });
@@ -105,7 +105,6 @@ document.body.onmousedown=(e)=>{
 function start() {
   aqw.style["overflow-wrap"] = "unset";
   aqw.style["overflow"] = "auto";
-  aqw.style["transform-origin"] = "0px 0px";
   aqw.oninput=()=>{
     sav();
   };
@@ -151,7 +150,7 @@ function start() {
       }
       scl=Number(scl.toFixed(2));
       if(scl<=scm)scl=scm;
-      aqw.style.transform=`scale(${scl})`;
+      aqw.style.zoom=scl;
       chrome.storage.local.get(['data'],(rst)=>{
         dt = rst.data;
         dt[id][2] = scl;
