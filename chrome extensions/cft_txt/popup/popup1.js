@@ -112,6 +112,7 @@ document.body.onmousedown=(e)=>{
 function start() {
   aqw.style["overflow-wrap"] = "unset";
   aqw.style["overflow"] = "auto";
+  aqw.style["white-space"] = "nowrap";
   aqw.oninput=()=>{
     sav();
   };
