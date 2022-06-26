@@ -3,12 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>star</title>
-    <script>
-        window.onload=()=>{
-            document.querySelectorAll("script")[document.querySelectorAll("script").length-1].remove();
-            document.querySelectorAll("div")[document.querySelectorAll("div").length-1].remove();
-        };
-    </script>
+    <script src="../remove.js"></script>
     <style>
     </style>
 </head>
@@ -19,6 +14,7 @@
 	var POINT_COLOR = "rgba(255,255,255,0.7)";
 	var LINE_LENGTH = 10000;
 	var cvs = document.createElement("canvas");
+	var ids=0;
 	cvs.width = window.innerWidth*2;
 	cvs.height = window.innerHeight*2;
 	cvs.style.cssText = "\
@@ -92,10 +88,10 @@
 	var p0 = new Point();
 	p0.dx = p0.dy = 0;
 	var degree = 2.5;
-	document.onmousemove = function (ev) {
+	document.onmousemove = function isd(ev) {
 	   p0.x = ev.clientX;
 	   p0.y = ev.clientY;
-	}
+	};
 	document.onmousedown = function (ev) {
 	   degree = 5.0;
 	   p0.x = ev.clientX;
@@ -252,10 +248,27 @@
         dv.addEventListener("touchstart",dv.onmousedown);
     }
     document.body.addEventListener("keydown",(k)=>{
-        if(k.key=='f'){
+        if(k.key=='f'&&k.shiftKey){
             document.querySelectorAll("div").forEach((i)=>{
                 i.remove();
             });
+        }
+        if(k.key=='f'){
+            if(document.fullscreenElement==null){
+                document.body.requestFullscreen();
+            }
+            else{
+                document.exitFullscreen();
+            }
+        }
+        if(k.key=='x'){
+            if(ids){
+                document.onmousemove =isd;
+            }
+            else{
+                document.onmousemove ='';
+            }
+            ids^=1;
         }
     });
 	initPoints(POINT_NUM);

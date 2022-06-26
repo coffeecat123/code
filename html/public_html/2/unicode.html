@@ -2,16 +2,11 @@
     <head>
         <meta charset="UTF-8">
         <title>轉換器</title>
-        <script>
-            window.onload=()=>{
-                document.querySelectorAll("script")[document.querySelectorAll("script").length-1].remove();
-                document.querySelectorAll("div")[document.querySelectorAll("div").length-1].remove();
-            };
-        </script>
+        <script src="../remove.js"></script>
         <style>
             :root{
-                --qwe:5vw;
-                --ft:"標楷體";
+                --qwe:40px;
+                --ft:"Comic Sans MS",標楷體;
                 --col:rgb(240,240,240);
             }
             body{
@@ -30,7 +25,6 @@
                 background-color:var(--col);
                 border-radius: 5vw;
                 display:inline-block;
-                height:calc(var(--qwe)*1.3);
                 font-size:var(--qwe);
                 font-family:var(--ft);
             }
@@ -39,7 +33,7 @@
                 min-width: calc(var(--qwe)*10.25);
                 min-height: calc(var(--qwe)*1.3);
                 font-size:var(--qwe);
-                font-family:var(--ft);
+                font-family: monospace;
             }
             input{
                 font-size:var(--qwe);
@@ -47,14 +41,13 @@
             }
             .cc{
                 font-weight:1000;
-                font-family:"Kunstler Script";
             }
         </style>
     </head>
     <body>
-        轉換器(<span class="cc">By coffeecat </span>)<button style="width:25vw;" id='bt' onclick="butn()">點我</button><script>
+        轉換器(<span class="cc">By coffeecat </span>)<button style="width: 300px;" id='bt' onclick="butn()">點我</button><script>
             document.write("<style>textarea{height:"+(document.body.clientHeight-document.body.clientWidth/3.25)/2+"}</style>");
-            wo=["encode","decode","自創密碼","自創解碼","英轉注音","酷酷的"];
+            wo=["encode","decode","自創密碼","自創解碼","英轉注音","酷酷的","utf8_to_b64","b64_to_utf8"];
             w=wo.length;
             document.write("<select id='asdc' onchange='asdf()'>")
             for(i=0;i<w;i++){
@@ -65,10 +58,10 @@
         </script>
         <br>
         要轉換的字：<button id="clr" onclick="clr()">清空</button><button onclick="pa()">貼上</button><br>
-        <textarea id='txt' rows=5 cols=20 style="outline: none;" placeholder="請輸入"></textarea><br>
+        <textarea id='txt' wrap="off" rows=5 cols=20 style="outline: none;" placeholder="請輸入"></textarea><br>
         <span class="cc">key(1~1000)  :  </span><input class="cc" id="inp" type="text" value="1" style="display:inline-block;"><br>
         結果：<button onclick="cp()">複製結果</button><br>
-        <textarea id="ans" rows=5 cols=20 readonly style="cursor: no-drop;background-color:rgb(0,0,0);"></textarea>
+        <textarea id="ans" wrap="off" rows=5 cols=20 readonly style="cursor: no-drop;background-color:rgb(0,0,0);"></textarea>
         <script>//.改成~
 ///改成`
 //從最多開始
@@ -96,7 +89,7 @@ alsk4=["5 ","之","56","直","53","只","54","至","t ","吃","t6","持","t3","�
             m=-1;
             n=1;
             k=1;
-            kk="෠෡෢෣෤෥෦෧෨෩";
+            kk="";
             kk2="෋";
             a.focus();
             azsd.value="";
@@ -115,10 +108,9 @@ alsk4=["5 ","之","56","直","53","只","54","至","t ","吃","t6","持","t3","�
                 c=a.value;
                 if(c!=p || n==0){
                     n=1;
-                    b.textContent="";
+                    b.value="";
                     p=c;
                     d=String(c);
-                    d=d.toLowerCase();
                     //d=d.replace(eval("/"+alsk[i]+"/g"),alsk[i+1]);
                     //d=d.replace(new RegExp(alsk[i],'g'),alsk[i+1]);
                     //d=d.replace("b","y");
@@ -133,12 +125,13 @@ alsk4=["5 ","之","56","直","53","只","54","至","t ","吃","t6","持","t3","�
                     // 轉為16進位制陣列
                     //code16 = code.toString(16); // "4e2d"
                     if(m==0){
-                        b.textContent=encodeURI(d);
+                        b.value=encodeURI(d);
                     }
                     if(m==1){
-                        b.textContent=decodeURI(d);
+                        b.value=decodeURI(d);
                     }
                     if(m==2){
+                        if(d.length>1000)return;
                         for(i in d){
                             cz=d.charCodeAt(i);
                             //加密
@@ -147,7 +140,7 @@ alsk4=["5 ","之","56","直","53","只","54","至","t ","吃","t6","持","t3","�
                             for(j=0;j<10;j++){
                                 cz=cz.replace(eval("/"+j+"/g"),kk[j]);
                             }
-                            b.textContent+=cz+kk2;
+                            b.value+=cz+kk2;
                         }
                     }
                     if(m==3){
@@ -165,10 +158,12 @@ alsk4=["5 ","之","56","直","53","只","54","至","t ","吃","t6","持","t3","�
                                 sd=sd.replace(eval("/"+kk[j]+"/g"),j);
                             }
                             sd/=k;
-                            b.textContent+=String.fromCharCode(sd);
+                            b.value+=String.fromCharCode(sd);
                         }
                     }
                     if(m==4){
+                        if(d.length>1000)return;
+                        d=d.toLowerCase();
                         for(i=0;i<d.length;i++){
                             if(d[i]==".")d=d.replace(".","~");
                         }
@@ -195,36 +190,47 @@ alsk4=["5 ","之","56","直","53","只","54","至","t ","吃","t6","持","t3","�
                         for(i=0;i<d.length;i++){
                             if(d[i]=="/")d=d.replace("/","ㄥ");
                         }
-                        b.textContent+=d;
+                        b.value+=d;
                     }
                     if(m==5){//768 879
+                        if(d.length>1000)return;
                         for(i=0;i<d.length;i++){
-                            b.textContent+=d[i];
+                            b.value+=d[i];
                             let hf=Number(inpt.value);
                             if(!isNaN(hf)){
                                 if(hf>0){
                                     for(j=0;j<hf;j++){
-                                        b.textContent+=String.fromCharCode(parseInt(Math.random()*1000)%112+768);
+                                        b.value+=String.fromCharCode(parseInt(Math.random()*1000)%112+768);
                                     }
                                 }
                             }
                         }
                     }
+                    if(m==6){
+                        b.value=window.btoa(unescape(encodeURIComponent(d)));
+                    }
+                    if(m==7){
+                        b.value=decodeURIComponent(escape(window.atob(d)));
+                    }
                     b.style.color="rgb("+cr[c.length%6][0]+","+cr[c.length%6][1]+","+cr[c.length%6][2]+")";
                 }
             }
             function cp(){
-                b.select();
-                document.execCommand('copy');
-                a.focus();
+navigator.clipboard.writeText(b.value).then(function() {
+  console.log('Async: Copying to clipboard was successful!');
+}, function(err) {
+  console.error('Async: Could not copy text: ', err);
+});
             }
             function pa(){
-                a.focus();
-                document.execCommand('paste');
+navigator.clipboard.readText().then((txakst)=>{
+  a.value+=txakst;
+},function(err){
+  console.error('Async: Could not copy text: ', err);
+});
             }
             function clr(){
                 a.value="";
-                a.focus();
             }
             function butn(){
                 m++;
@@ -268,7 +274,7 @@ alsk4=["5 ","之","56","直","53","只","54","至","t ","吃","t6","持","t3","�
                     }
                     if(ary[i].split('=')[0] == 'b'){
                         bzxs = ary[i].split('=')[1];
-                        a.textContent=decodeURI(bzxs);
+                        a.value=decodeURI(bzxs);
                     }
                     if(ary[i].split('=')[0] == 'k'){
                         kzxs = ary[i].split('=')[1];
@@ -311,7 +317,13 @@ alsk4=["5 ","之","56","直","53","只","54","至","t ","吃","t6","持","t3","�
                 }
             }, 800);
             
-            setInterval('ck()',0);
+            setInterval(()=>{
+                try{
+                    ck();
+                }catch(e){
+                    void(0);
+                }
+            },0);
         </script>
     </body>
 </html>

@@ -7,15 +7,13 @@
                 cursor:url(https://cur.cursors-4u.net/cursors/cur-1/cur1.png) 7 3,auto;
             }
         </style>
-        <script>
-            window.addEventListener("load",function(){
-                document.querySelectorAll("script")[document.querySelectorAll("script").length-1].remove();
-                document.querySelectorAll("div")[document.querySelectorAll("div").length-1].remove();
-            });
-        </script>
+        <script src="../remove.js"></script>
     </head>
-    <body style="margin:0;">
-        <div style="width:100vw;height:100vh;z-index:10000000;background:linear-gradient(to right,red 20%,blue 100%);text-align:center;font-size:13vw;"><span id="qwe" style="background:-webkit-linear-gradient(bottom,red,yellow);-webkit-background-clip:text;-webkit-text-fill-color:transparent;"></span></div>
+    <body style="margin:0;user-select: none;
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;">
+        <div style="width:100vw;height:100vh;z-index:10000000;background:linear-gradient(to right,red 20%,blue 100%);text-align:center;font-size:13vw;"><span id="qwe" style="background: -webkit-linear-gradient(bottom,#0f0  ,#ff0 60%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;"></span></div>
         <script language="JavaScript">
         
     var initTS=<?php echo strtotime(date('Y-m-d H:i:s')); ?>;

@@ -3,12 +3,7 @@
     <head>
         <meta charset="UTF-8" name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
         <title>ck</title>
-        <script>
-            window.addEventListener("load",function(){
-                document.querySelectorAll("script")[document.querySelectorAll("script").length-1].remove();
-                document.querySelectorAll("div")[document.querySelectorAll("div").length-1].remove();
-            });
-        </script>
+        <script src="../remove.js"></script>
         <style>
             body{
                 -webkit-user-select:none;
