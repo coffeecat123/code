@@ -39,6 +39,27 @@ chrome.storage.local.get(['dark'], function(result) {
     loin();
   }
 });
+var isfs = 0,isfs_=0;
+window.onfocus = function() {
+  isfs = 1;
+};
+window.onblur = function() {
+  isfs = 0;
+};
+document.onfocusin = function() {
+  isfs = 1;
+};
+document.onfocusout = function() {
+  isfs = 0;
+};
+setInterval(function() {
+  if (isfs&&isfs!=isfs_) {
+    chrome.storage.local.get(['data'], function(result) {
+      aqw.innerHTML = result.data[id][1];
+    });
+  }
+  isfs_=isfs;
+}, 800);
 function loin() {
   document.title=id;
   chrome.storage.local.get(['data', 'dark'], function(result) {
