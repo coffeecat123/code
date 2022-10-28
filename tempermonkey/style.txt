@@ -1,8 +1,11 @@
 :root {
-    --c1: 143 0 115;
+    --c1: 143,0,115;
 }
 .curwaitmsg {
     background-color: #181818;
+}
+::-webkit-scrollbar-corner {
+    background:#181818;
 }
 ::-webkit-scrollbar-track {
     -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
