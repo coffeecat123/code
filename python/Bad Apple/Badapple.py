@@ -1,6 +1,5 @@
 from toascii import Video
-v=Video('yt1s.com - 東方Bad Apple ＰＶ影絵.mp4',
-        scale=0.1,verbose=True)
+v=Video('yt1s.com - 東方Bad Apple ＰＶ影絵.mp4',scale=0.1,verbose=True)
 v.convert()
 a=0
 b=len(v.frames)
