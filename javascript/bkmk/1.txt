@@ -1,0 +1,1 @@
+javascript: (function() {alert("434w3tw4\nsdghdfhfd\nfghdfhfdh\nrtgd\n\n\nesgfdgdf");})();

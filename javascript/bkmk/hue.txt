@@ -1,0 +1,1 @@
+javascript:(function(){let _q=0,html=document.querySelector("html"),q=setInterval(()=>{    html.style.cssText+=`filter: hue-rotate(${_q++}deg);`;    _q%=360;},10);})();
