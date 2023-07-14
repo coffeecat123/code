@@ -7,9 +7,9 @@ if(len(pdf_lst)<=1):
     exit()
 print("wait...")
 
-from PyPDF2 import PdfFileMerger
+from pypdf import PdfMerger
 
-file_merger = PdfFileMerger(strict=False)
+file_merger = PdfMerger()
 for pdf in pdf_lst:
     file_merger.append(pdf)
 
@@ -20,3 +20,5 @@ else:
     while(os.path.isfile('./output/merge ('+str(k)+').pdf')):
         k+=1
     file_merger.write('./output/merge ('+str(k)+').pdf')
+
+file_merger.close()
