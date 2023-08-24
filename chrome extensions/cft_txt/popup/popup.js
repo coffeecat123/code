@@ -41,11 +41,11 @@ chrome.storage.local.get(['data','dark'], function(result) {
       return;
     }
     for (const a of Object.entries(data)) {
-      let b=document.createElement("button");
-      let b1=document.createElement("textarea");
+      let b=document.createElement("div");
+      let b1=document.createElement("t");
       let c=a[1][0],c1;
       b.className="fle";
-      b1.value=a[0];
+      b1.innerText=a[0];
       b1.className="tet";
       b1.setAttribute("disabled","");
       b.aid=a[0];
@@ -62,13 +62,13 @@ chrome.storage.local.get(['data','dark'], function(result) {
         window.open(`popup1.html#${encodeURI(b.aid)}`,"_self").focus();
       };
       b.onclick=()=>{
-        if(defi.hasOwnProperty(b.firstChild.value)){
+        if(defi.hasOwnProperty(b.firstChild.innerText)){
           b.style.outline=`none`;
-          delete defi[b.firstChild.value];
+          delete defi[b.firstChild.innerText];
         }
         else{
           b.style.outline=`4px var(--oln) solid`;
-          defi[b.firstChild.value]=1;
+          defi[b.firstChild.innerText]=1;
         }
         if(Object.keys(defi).length==0){
           del.title=`goto recycle bin`;
@@ -100,7 +100,7 @@ del.onclick=()=>{
         trh.push([a[0],dt[a[0]],Date.now()]);
         let aqq=aqz.children;
         for(let i=0;i<aqq.length;i++){
-          if(aqq[i].firstChild.value==a[0]){
+          if(aqq[i].firstChild.innerText==a[0]){
             aqq[i].remove();
             break;
           }
@@ -149,11 +149,11 @@ nee.onclick=()=>{
     dt[nname][2]=olddt[2];
     chrome.storage.local.set({data:dt});
     let a=[nname,dt[nname]];
-    let b=document.createElement("button");
-    let b1=document.createElement("textarea");
+    let b=document.createElement("div");
+    let b1=document.createElement("t");
     let c=a[1][0],c1;
     b.className="fle";
-    b1.value=a[0];
+    b1.innerText=a[0];
     b1.className="tet";
     b1.setAttribute("disabled","");
     b.aid=a[0];
@@ -170,13 +170,13 @@ nee.onclick=()=>{
       window.open(`popup1.html#${encodeURI(b.aid)}`,"_self").focus();
     };
     b.onclick=()=>{
-      if(defi.hasOwnProperty(b.firstChild.value)){
+      if(defi.hasOwnProperty(b.firstChild.innerText)){
         b.style.outline=`none`;
-        delete defi[b.firstChild.value];
+        delete defi[b.firstChild.innerText];
       }
       else{
         b.style.outline=`4px var(--oln) solid`;
-        defi[b.firstChild.value]=1;
+        defi[b.firstChild.innerText]=1;
       }
       if(Object.keys(defi).length==0){
         del.title=`goto recycle bin`;

@@ -37,12 +37,12 @@ chrome.storage.local.get(['trash','dark'],(result)=>{
     }
     else{
       tr[trash[i][2]]=[trash[i]];
-      let b=document.createElement("button");
-      let b1=document.createElement("textarea");
+      let b=document.createElement("div");
+      let b1=document.createElement("t");
       let c=trash[i][1][0],c1;
       b.className="fle";
       b.setAttribute('tme',trash[i][2]);
-      b1.value=trash[i][0];
+      b1.innerText=trash[i][0];
       b1.className="tet";
       b1.setAttribute("disabled","");
       b.aid=trash[i][0];
@@ -56,7 +56,7 @@ chrome.storage.local.get(['trash','dark'],(result)=>{
       b1.style.color=wb[c1];
       b.style.border="3px var(--clr1) solid";
       b.onclick=()=>{
-        let _a=`${b.getAttribute("tme")}:${b.firstChild.value}`;
+        let _a=`${b.getAttribute("tme")}:${b.firstChild.innerText}`;
         if(defi.hasOwnProperty(_a)){
           b.style.outline=`none`;
           delete defi[_a];
@@ -95,7 +95,7 @@ del.onclick=()=>{
         if(defi.hasOwnProperty(_a)){
           let aqq=aqz.children;
           for(let i=0;i<aqq.length;i++){
-            if(aqq[i].getAttribute("tme")==_a.split(":")[0]&&aqq[i].firstChild.value==_a.substring(_a.indexOf(":")+1)){
+            if(aqq[i].getAttribute("tme")==_a.split(":")[0]&&aqq[i].firstChild.innerText==_a.substring(_a.indexOf(":")+1)){
               aqq[i].remove();
               break;
             }
@@ -131,7 +131,7 @@ res.onclick=()=>{
         if(defi.hasOwnProperty(_a)){
           let aqq=aqz.children;
           for(let k=0;k<aqq.length;k++){
-            if(aqq[k].getAttribute("tme")==_a.split(":")[0]&&aqq[k].firstChild.value==_a.substring(_a.indexOf(":")+1)){
+            if(aqq[k].getAttribute("tme")==_a.split(":")[0]&&aqq[k].firstChild.innerText==_a.substring(_a.indexOf(":")+1)){
               aqq[k].remove();
               break;
             }

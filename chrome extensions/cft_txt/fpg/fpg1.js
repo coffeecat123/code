@@ -39,24 +39,6 @@ chrome.storage.local.get(['dark'], function(result) {
     loin();
   }
 });
-var isfs = 0;
-window.onfocus = function() {
-  isfs = 1;
-};
-aqz.contentDocument.body.onfocus=()=>{
-  isfs = 1;
-};
-document.onfocusin = function() {
-  isfs = 1;
-};
-setInterval(function() {
-  if (isfs) {
-    chrome.storage.local.get(['data'], function(result) {
-      aqw.innerHTML = result.data[id][1];
-    });
-    isfs=0;
-  }
-}, 800);
 function loin() {
   document.title=id;
   chrome.storage.local.get(['data', 'dark'], function(result) {
