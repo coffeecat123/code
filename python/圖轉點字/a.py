@@ -60,7 +60,7 @@ while(i<y):
             s+=64
         if(add((i+3)*x+j+1)<=k):
             s+=128
-        z1=a[255-s]
+        z1=a[s]
         if(z1==a[0]):
             z+=r.choice(a1)
         else:

@@ -22,7 +22,7 @@ i=0
 while(i<y):
     j=0
     while(j<x):
-        z1=a[int(add(i*x+j)/255*(len(a)-1))]
+        z1=a[len(a)-1-int(add(i*x+j)/255*(len(a)-1))]
         if(z1==a[0]):
             z+=r.choice(a1)
         else:
