@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-int n;
+int n;//一般是3 
 vector <vector<int> > a,v,v2;
 /*
 a[x][0]==0 ->這格是空的 
@@ -20,6 +20,19 @@ a[x][0]==0 ->這格是空的
 數偶摒除法
 猜測
 */
+/*
+範例輸入
+3
+000503008
+204060090
+010000000
+070000050
+501006300
+090010000
+000200900
+700000000
+605040020
+*/ 
 int pr(int b)
 {
 	for(int i=0;i<n*n*n*n;i++)
@@ -426,11 +439,17 @@ int main()
 		v2.clear();
 		for(int i=0;i<n*n*n*n;i++)
 			a.push_back(vector <int>(n*n+1,0));
-		for(int i=0;i<n*n*n*n;i++)
+		for(int i=0;i<n*n;i++)
 		{
-			cin>>a[i][0];
-			if(a[i][0])
-				de(i,a[i][0]);
+			string s;
+			cin>>s;
+			for(int j=0;j<n*n;j++)
+			{
+				int idx=i*n*n+j;
+				a[idx][0]=s[j]-'0';
+				if(a[idx][0])
+					de(idx,a[idx][0]);
+			}
 		}
 		v.push_back(vector <int>(n*n*n*n*(n*n+1),0));
 		for(int i=0;i<n*n*n*n*(n*n+1);i++)
