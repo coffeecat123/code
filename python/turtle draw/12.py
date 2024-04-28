@@ -1,6 +1,7 @@
 import turtle as a
 x = 0.01
-a.speed(0)
+#a.speed(0)
+a.tracer(0)
 for i in range(18000):
     a.fd(x)
     a.rt(1/100)

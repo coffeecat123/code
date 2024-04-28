@@ -1,5 +1,4 @@
 import tkinter as a
-import turtle as tl
 count = 0
 window = a.Tk()
 def abc():
