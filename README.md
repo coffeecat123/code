@@ -8,7 +8,7 @@
 * javascript
 * python
 * reg
-* tempermonkey
+* tampermonkey
 
 [Download](https://codeload.github.com/coffeecat123/code/zip/refs/heads/main)
 
