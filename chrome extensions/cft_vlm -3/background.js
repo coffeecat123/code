@@ -7,6 +7,14 @@ chrome.tabs.onRemoved.addListener((tabId, removeInfo) => {
         }
     });
 });
+chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+    chrome.storage.local.get(['data'], (result) => {
+        let data = result.data || {};
+        if(data.hasOwnProperty(tabId)) {
+            chrome.action.setBadgeText({ text: data[tabId], tabId: tab_id });
+        }
+    });
+});
 chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
     if (message.type === 'startCapture') {
         mediaStreamId = await chrome.tabCapture.getMediaStreamId({
