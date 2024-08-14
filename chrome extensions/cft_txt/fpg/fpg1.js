@@ -227,4 +227,17 @@ function start() {
       chrome.storage.local.set({data});
     });
   }
+  const observer = new MutationObserver((mutationsList) => {
+    for (let mutation of mutationsList) {
+      if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
+        sav();
+      }
+    }
+  });
+  const config = {
+    attributes: true,
+    attributeFilter: ['style'],
+    subtree: true
+  };
+  observer.observe(aqw, config);
 }
