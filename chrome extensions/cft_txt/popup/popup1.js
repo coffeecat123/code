@@ -127,11 +127,7 @@ function start() {
       scl = Number(scl.toFixed(2));
       if (scl <= scm) scl = scm;
       aqw.style.zoom = scl;
-      chrome.storage.local.get(['data'], (rst) => {
-        dt = rst.data;
-        dt[id][2] = scl;
-        chrome.storage.local.set({ data: dt });
-      });
+      sav();
     }
   };
   ipc.oninput = () => {
@@ -206,11 +202,11 @@ function start() {
     rme.innerHTML = rmea[sv];
   };
   function sav() {
-    let data, icl = aqw.innerHTML;
-    chrome.storage.local.get(['data'], (rst) => {
-      data = rst.data;
-      data[id][1] = icl;
-      chrome.storage.local.set({ data });
+    chrome.storage.local.get(['data'],(rst)=>{
+      let data = rst.data;
+      data[id][1] = aqw.innerHTML;
+      data[id][2] = scl;
+      chrome.storage.local.set({data});
     });
   }
   const observer = new MutationObserver((mutationsList) => {
