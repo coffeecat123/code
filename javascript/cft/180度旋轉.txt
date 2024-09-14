@@ -1,1 +1,12 @@
-javascript:(function(){var e=document.querySelectorAll("video");for(let i=0;i<e.length;i++){if(!e[i].paused){if(e[i].style.transform=="rotate(180deg)"){e[i].style.transform+="rotate(0deg)";}else{e[i].style.transform+="rotate(180deg)";}}}})();
+javascript: (function() {
+	var e = document.querySelectorAll("video");
+	for (let i = 0; i < e.length; i++) {
+		if (!e[i].paused) {
+			if (e[i].style.transform == "rotate(180deg)") {
+				e[i].style.transform += "rotate(0deg)";
+			} else {
+				e[i].style.transform += "rotate(180deg)";
+			}
+		}
+	}
+})();

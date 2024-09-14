@@ -1,1 +1,63 @@
-javascript%3A%20(function()%20%7B%0A%09if%20(document.querySelectorAll(%22.eifcbdckfesrsve%22).length%20%3E%200)%20return%3B%0A%09let%20dv%20%3D%20document.createElement(%22div%22)%3B%0A%09let%20dq%20%3D%200%3B%0A%09let%20q%20%3D%20setInterval(qw0%2C%201)%3B%0A%09let%20le%20%3D%201%3B%0A%09dv.className%20%3D%20%22eifcbdckfesrsve%22%3B%0A%09dv.style%20%3D%20%22z-index%3A%201000000%3Bpointer-events%3A%20none%3Bposition%3A%20fixed%3Bdisplay%3A%20none%3Bbackground%3A%20rgb(111%20167%20220%2F80%25)%3B%22%3B%0A%09document.body.append(dv)%3B%0A%09document.addEventListener(%22mousedown%22%2C%20function%20qwe(e)%20%7B%0A%09%09clearInterval(q)%3B%0A%09%09document.removeEventListener(%22mousedown%22%2C%20qwe)%3B%0A%09%09document.removeEventListener(%22mousemove%22%2C%20qw1)%3B%0A%09%09document.removeEventListener(%22mouseleave%22%2C%20qw2)%3B%0A%09%09window.removeEventListener(%22scroll%22%2C%20qw0)%3B%0A%09%09dv.remove()%3B%0A%09%09if%20(e.button%20!%3D%200)%20return%3B%0A%09%09var%20b%20%3D%20prompt(%22font-size%3A%20%3Fpx%22)%3B%0A%09%09zas(dq%2C%20b)%3B%0A%09%7D)%3B%0A%09document.addEventListener(%22mousemove%22%2C%20qw1)%3B%0A%09document.addEventListener(%22mouseleave%22%2C%20qw2)%3B%0A%09document.addEventListener(%22contextmenu%22%2C%20qw3)%3B%0A%0A%09function%20qw0()%20%7B%0A%09%09if%20(le)%20return%3B%0A%09%09dv.style.display%20%3D%20%22block%22%3B%0A%09%09dv.style.left%20%3D%20dq.getBoundingClientRect().left%20%2B%20document.body.scrollLeft%20%2B%20%22px%22%3B%0A%09%09dv.style.top%20%3D%20dq.getBoundingClientRect().top%20%2B%20document.body.scrollTop%20%2B%20%22px%22%3B%0A%09%09dv.style.width%20%3D%20dq.offsetWidth%20%2B%20%22px%22%3B%0A%09%09dv.style.height%20%3D%20dq.offsetHeight%20%2B%20%22px%22%3B%0A%09%7D%0A%0A%09function%20qw1(e)%20%7B%0A%09%09let%20ev%20%3D%20e.target%3B%0A%09%09le%20%3D%200%3B%0A%09%09if%20(dq%20%3D%3D%20ev)%20return%3B%0A%09%09dq%20%3D%20ev%3B%0A%09%09qw0()%3B%0A%09%7D%0A%0A%09function%20qw2(e)%20%7B%0A%09%09dv.style.display%20%3D%20%22none%22%3B%0A%09%09dq%20%3D%200%3B%0A%09%09le%20%3D%201%3B%0A%09%7D%0A%0A%09function%20qw3(e)%20%7B%0A%09%09e.preventDefault()%3B%0A%09%09e.stopPropagation()%3B%0A%09%09document.removeEventListener(%22contextmenu%22%2C%20qw3)%3B%0A%09%7D%0A%0A%09function%20zas(a%2C%20b)%20%7B%0A%09%09if%20(a.innerText%20%3D%3D%20%22%22)%20return%3B%0A%09%09a.style.fontSize%20%3D%20b%20%2B%20%22px%22%3B%0A%09%09if%20(a.childElementCount%20%3D%3D%200)%20return%3B%0A%09%09let%20c%20%3D%20a.children%3B%0A%09%09for%20(let%20i%20%3D%200%3B%20i%20%3C%20c.length%3B%20i%2B%2B)%20%7B%0A%09%09%09zas(c%5Bi%5D%2C%20b)%3B%0A%09%09%7D%0A%09%7D%0A%7D)()%3B
+javascript: (function() {
+	if (document.querySelectorAll(".eifcbdckfesrsve").length > 0) return;
+	let dv = document.createElement("div");
+	let dq = 0;
+	let q = setInterval(qw0, 1);
+	let le = 1;
+	dv.className = "eifcbdckfesrsve";
+	dv.style = "z-index: 1000000;pointer-events: none;position: fixed;display: none;background: rgb(111 167 220/80%);";
+	document.body.append(dv);
+	document.addEventListener("mousedown", function qwe(e) {
+		clearInterval(q);
+		document.removeEventListener("mousedown", qwe);
+		document.removeEventListener("mousemove", qw1);
+		document.removeEventListener("mouseleave", qw2);
+		window.removeEventListener("scroll", qw0);
+		dv.remove();
+		if (e.button != 0) return;
+		var b = prompt("font-size: ?px");
+		zas(dq, b);
+	});
+	document.addEventListener("mousemove", qw1);
+	document.addEventListener("mouseleave", qw2);
+	document.addEventListener("contextmenu", qw3);
+
+	function qw0() {
+		if (le) return;
+		dv.style.display = "block";
+		dv.style.left = dq.getBoundingClientRect().left + document.body.scrollLeft + "px";
+		dv.style.top = dq.getBoundingClientRect().top + document.body.scrollTop + "px";
+		dv.style.width = dq.offsetWidth + "px";
+		dv.style.height = dq.offsetHeight + "px";
+	}
+
+	function qw1(e) {
+		let ev = e.target;
+		le = 0;
+		if (dq == ev) return;
+		dq = ev;
+		qw0();
+	}
+
+	function qw2(e) {
+		dv.style.display = "none";
+		dq = 0;
+		le = 1;
+	}
+
+	function qw3(e) {
+		e.preventDefault();
+		e.stopPropagation();
+		document.removeEventListener("contextmenu", qw3);
+	}
+
+	function zas(a, b) {
+		if (a.innerText == "") return;
+		a.style.fontSize = b + "px";
+		if (a.childElementCount == 0) return;
+		let c = a.children;
+		for (let i = 0; i < c.length; i++) {
+			zas(c[i], b);
+		}
+	}
+})();
