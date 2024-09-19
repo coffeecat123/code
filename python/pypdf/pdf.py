@@ -1,24 +1,26 @@
 import os
+from pypdf import PdfWriter
 
 target_path = './input'
-pdf_lst = [f for f in os.listdir(target_path) if f.endswith('.pdf')]
-pdf_lst = [os.path.join(target_path, filename) for filename in pdf_lst]
-if(len(pdf_lst)<=1):
+pdf_lst = [os.path.join(target_path, f) for f in os.listdir(target_path) if f.endswith('.pdf')]
+if len(pdf_lst) <= 1:
     exit()
+
 print("wait...")
 
-from pypdf import PdfMerger
-
-file_merger = PdfMerger()
+pdf_writer = PdfWriter()
 for pdf in pdf_lst:
-    file_merger.append(pdf)
+    pdf_writer.append(pdf)
 
-if(os.path.isfile("./output/merge.pdf")==0):
-    file_merger.write("./output/merge.pdf")
-else:
-    k=1
-    while(os.path.isfile('./output/merge ('+str(k)+').pdf')):
-        k+=1
-    file_merger.write('./output/merge ('+str(k)+').pdf')
+output_path = './output/merge.pdf'
 
-file_merger.close()
+if os.path.isfile(output_path):
+    k = 1
+    while os.path.isfile(f'./output/merge ({k}).pdf'):
+        k += 1
+    output_path = f'./output/merge ({k}).pdf'
+
+with open(output_path, 'wb') as f:
+    pdf_writer.write(f)
+
+print('down!')
