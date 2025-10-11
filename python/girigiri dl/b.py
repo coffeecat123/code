@@ -21,8 +21,8 @@ output_folder = os.path.split(path.rstrip('/'))[1]
 
 # === 核心修改: 新的下載列表結構 ===
 dl={
-    "ep":range(1,1+1),    # EP01~EP15 (標準集數)
-    "sp":range(1,1+1),    # SP01~SP16 (特別篇)
+    "ep":range(1,16+1),    # EP01~EP15 (標準集數)
+    "sp":range(1,16+1),    # SP01~SP16 (特別篇)
     "ep_5":[12.5],         # EP12.5 (半集)
     "sp_5":[12.5]          # SP12.5 (特別篇半集)
 }
@@ -184,14 +184,14 @@ def download_episode(item_type, item, line_num):
     if item_type.startswith('ep'):
         # 處理標準集數和半集
         m3u8_url = f"{url}{raw_path_item}/playlist.m3u8"
-        output_file = os.path.join(output_folder, f"OreNoImoto_EP{item_str}.mp4")
+        output_file = os.path.join(output_folder, f"OreNoImoto_[EP][{item_str}].mp4")
         RAW_PREFIX = f"[EP{raw_path_item}]" # 原始前綴 (不含空格)
 
     elif item_type.startswith('sp'):
         # 處理特別篇和特別篇半集
         # 檔案和 URL 使用 SP + 編號
         m3u8_url = f"{url}SP{raw_path_item}/playlist.m3u8"
-        output_file = os.path.join(output_folder, f"OreNoImoto_SP{item_str}.mp4")
+        output_file = os.path.join(output_folder, f"OreNoImoto_[SP][{item_str}].mp4")
         RAW_PREFIX = f"[SP{raw_path_item}]" # 原始前綴 (不含空格)
     else:
         # 項目類型錯誤
