@@ -6,6 +6,7 @@ from concurrent.futures import ThreadPoolExecutor
 from threading import Lock, Event
 import time 
 from urllib.parse import urlparse, unquote 
+import requests
 
 # ==================================
 # 設定 (無變動)
@@ -26,6 +27,7 @@ dl={
     "ep_5":[12.5],         # EP12.5 (半集)
     "sp_5":[12.5]          # SP12.5 (特別篇半集)
 }
+XML_API_URL = "https://m3u8.girigirilove.com/api.php/Scrolling/getVodOutScrolling" 
 
 # 將所有下載項目扁平化為一個列表，用於計算 total_episodes 和分配行號
 # 每個元素是 (item_type, item_number)
@@ -61,7 +63,46 @@ def check_ffprobe():
 
 FFPROBE_AVAILABLE = check_ffprobe()
 duration_cache = {} 
+def download_xml(m3u8_url, xml_output_file, line_num, PREFIX):
+    """
+    發送請求獲取 XML URL，然後下載 XML 檔案。
+    如果成功，返回 True；失敗返回 False。
+    """
+    try:
+        # 1. 獲取 XML URL
+        payload = {"play_url": m3u8_url}
+        headers = {'Content-Type': 'application/json'}
+        
+        # 狀態更新：正在獲取 XML URL
+        print_at_line(line_num, f"{PREFIX}🔎 正在獲取 XML 資訊...")
 
+        response = requests.post(XML_API_URL, json=payload, headers=headers, timeout=10)
+        response.raise_for_status() 
+        data = response.json()
+        
+        if data.get('code') != 1:
+            print_at_line(line_num, f"{PREFIX}❌ XML API 失敗: {data.get('msg', '未知錯誤')}")
+            return False
+
+        xml_url = data['info']
+        
+        # 2. 下載 XML 檔案
+        print_at_line(line_num, f"{PREFIX}📥 正在下載 XML 檔案...")
+        xml_response = requests.get(xml_url, timeout=10)
+        xml_response.raise_for_status()
+
+        with open(xml_output_file, 'wb') as f:
+            f.write(xml_response.content)
+            
+        print_at_line(line_num, f"{PREFIX}📝 XML 檔案下載完成.")
+        return True
+
+    except requests.exceptions.RequestException as e:
+        print_at_line(line_num, f"{PREFIX}❌ 請求 XML 失敗: {e}")
+        return False
+    except Exception as e:
+        print_at_line(line_num, f"{PREFIX}❌ 處理 XML 錯誤: {e}")
+        return False
 def get_duration(m3u8_url):
     """使用 ffprobe 獲取 m3u8 的總時長（秒），並使用快取"""
     if m3u8_url in duration_cache:
@@ -184,14 +225,16 @@ def download_episode(item_type, item, line_num):
     if item_type.startswith('ep'):
         # 處理標準集數和半集
         m3u8_url = f"{url}{raw_path_item}/playlist.m3u8"
-        output_file = os.path.join(output_folder, f"OreNoImoto_[EP][{item_str}].mp4")
+        output_file = os.path.join(output_folder, f"OreNoImoto [EP][{item_str}].mp4")
+        xml_file = os.path.join(output_folder, f"OreNoImoto [EP][{item_str}].xml") # 新增 XML 檔案名
         RAW_PREFIX = f"[EP{raw_path_item}]" # 原始前綴 (不含空格)
 
     elif item_type.startswith('sp'):
         # 處理特別篇和特別篇半集
         # 檔案和 URL 使用 SP + 編號
         m3u8_url = f"{url}SP{raw_path_item}/playlist.m3u8"
-        output_file = os.path.join(output_folder, f"OreNoImoto_[SP][{item_str}].mp4")
+        output_file = os.path.join(output_folder, f"OreNoImoto [SP][{item_str}].mp4")
+        xml_file = os.path.join(output_folder, f"OreNoImoto [SP][{item_str}].xml") # 新增 XML 檔案名
         RAW_PREFIX = f"[SP{raw_path_item}]" # 原始前綴 (不含空格)
     else:
         # 項目類型錯誤
@@ -213,7 +256,8 @@ def download_episode(item_type, item, line_num):
     # 計算進度條開始的列數
     # START_COL = 固定前綴長度 + 狀態文字長度 + 1 (ANSI 座標從 1 開始)
     START_COL = FIXED_PREFIX_LEN + len(STATUS_TEXT.strip())+4 + 1 
-
+    
+    download_xml(m3u8_url, xml_file, line_num, PREFIX)
     # 將錯誤/跳過訊息中的 PREFIX 替換為固定寬度版本
     if total_duration is None:
         print_at_line(line_num, f"{PREFIX}⚠️ 無法獲取總時長 ({m3u8_url})，跳過")
