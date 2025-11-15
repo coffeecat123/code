@@ -11,7 +11,7 @@ import requests
 # ==================================
 # 設定 (無變動)
 # ==================================
-url = "https://love.girigirilove.net/zijian/anime/2024/09/0928/OreNoImoto/" 
+url = "https://love.girigirilove.net/zijian/anime/2024/11/1125/YuruCampSeason2/" 
 if not url.endswith('/'):
     url += '/'
     

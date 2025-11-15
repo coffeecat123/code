@@ -206,12 +206,19 @@ def print_progress_only(line_num, start_col, progress_text):
         sys.stdout.write(progress_text.ljust(padding_len)) 
         sys.stdout.write("\033[u")
         sys.stdout.flush()
-
+def is_number(s: str) -> bool:
+    try:
+        float(s)
+        return True
+    except ValueError:
+        return False
 # ==================== 下載函數 ====================
 
 def download_episode(item_name, line_num):
     """下載單一集數"""
-    prefix_type = 'EP' if item_name.isdigit() else 'SP'
+    prefix_type = 'EP' if is_number(item_name) else 'SP'
+    if item_name.startswith("SP"):
+        item_name = item_name[2:]
     raw_prefix = f"[{prefix_type}{item_name}]"
     prefix = raw_prefix.ljust(9)
 
