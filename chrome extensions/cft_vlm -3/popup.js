@@ -8,7 +8,7 @@ chrome.action.setBadgeBackgroundColor({
 });
 
 let tab_id;
-let max = 1000, min = 0, wi = 200;
+let max = 300, min = 0, wi = 200;
 
 ipt.max = max;
 ipt.min = min;
@@ -24,6 +24,18 @@ chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
             }
             spn.innerText = ipt.value + "%";
             pt();
+            if (ipt.value != 100) {
+                chrome.runtime.sendMessage({
+                    type: 'startCapture',
+                    tab_id
+                });
+
+                chrome.runtime.sendMessage({
+                    type: 'changeVolume',
+                    tab_id,
+                    volume: ipt.value
+                });
+            }
         });
     }
 });
@@ -37,14 +49,33 @@ ipt.addEventListener("input", () => {
     pt();
     updateVolume();
 });
+document.querySelector(".d2").addEventListener("dblclick", () => {
+    ipt.value = 100;
+    pt();
+    updateVolume();
+});
 
 function updateVolume() {
     spn.innerText = ipt.value + "%";
     chrome.action.setBadgeText({ text: ipt.value, tabId: tab_id });
+
     chrome.storage.local.get(['data'], (result) => {
         let data = result.data || {};
         data[tab_id] = ipt.value;
+
         chrome.storage.local.set({ data }, () => {
+            if (ipt.value == 100) {
+                chrome.runtime.sendMessage({
+                    type: 'stopCapture',
+                    tab_id
+                });
+                return;
+            }
+            chrome.runtime.sendMessage({
+                type: 'startCapture',
+                tab_id
+            });
+
             chrome.runtime.sendMessage({
                 type: 'changeVolume',
                 tab_id,
@@ -53,16 +84,3 @@ function updateVolume() {
         });
     });
 }
-
-document.addEventListener('DOMContentLoaded', () => {
-    chrome.storage.local.get(['data'], (result) => {
-        let data = result.data || {};
-        if (data[tab_id] != undefined) return;
-        chrome.storage.local.set({ data }, () => {
-            chrome.runtime.sendMessage({
-                type: 'startCapture',
-                tab_id
-            });
-        });
-    });
-});
