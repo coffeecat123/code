@@ -1,3 +1,4 @@
+(function() {
 let trash,data,dark;
 let nt=Date.now();
 let defi={};
@@ -172,7 +173,8 @@ res.onclick=()=>{
   }
 };
 gbk.onclick = () => {
-    window.open(`fpg.html`, "_self");
+    //window.open(`fpg.html`, "_self");
+    navigateTo('fpg.html');
 };
 function chcr(){
   root.style.cssText+=`--bg: ${wb[dark^1]};`;
@@ -190,3 +192,51 @@ function chcr(){
     root.style.cssText+=`--oln: #ff0000`;
   }
 }
+function navigateTo(page,hash='') {
+  fetch(page)
+    .then(response => response.text())
+    .then(html => {
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, 'text/html');
+      
+      document.querySelectorAll('style[data-from]').forEach(style => {
+        style.remove();
+      });
+      const newStyles = doc.querySelectorAll('style');
+      newStyles.forEach(style => {        
+        const styleClone = style.cloneNode(true);
+        styleClone.setAttribute('data-from', page);
+        document.head.appendChild(styleClone);
+      });
+      document.querySelectorAll('script[data-from]').forEach(script => {
+        script.remove();
+      });
+
+      const newContent = doc.body.innerHTML;
+      
+      const targetElement = document.body;
+      if (targetElement) {
+        targetElement.innerHTML = newContent;
+      }
+      const newUrl = hash ? `${page}#${hash}` : page;
+      window.history.pushState(
+        { page, hash },  // state
+        '',              // title
+        newUrl           // url
+      );
+      if(hash){
+        location.hash=hash;
+      }
+      const newScripts = doc.querySelectorAll('script');
+      newScripts.forEach(newScript => {
+        if (newScript.src) {
+          const script = document.createElement('script');
+          script.src = newScript.src;
+          script.setAttribute('data-src', newScript.src);
+          document.body.appendChild(script);
+        }
+      });
+    })
+    .catch(error => console.error('加載失敗:', error));
+}
+})();

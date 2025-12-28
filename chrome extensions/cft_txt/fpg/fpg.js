@@ -1,3 +1,4 @@
+(function() {
 let mode=[`<svg width="24px" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="sun"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>`,`<svg width="30px" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="moon"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`];
 let data,dark;
 let defi={};
@@ -29,6 +30,7 @@ chrome.storage.local.get(['data','dark'], function(result) {
       aqz.innerHTML = "no file";
       return;
     }
+    aqz.innerHTML="";
     for (const a of Object.entries(data)) {
       let b=document.createElement("div");
       let b1=document.createElement("t");
@@ -48,7 +50,8 @@ chrome.storage.local.get(['data','dark'], function(result) {
       b1.style.color=wb[c1];
       b.style.border="3px var(--clr1) solid";
       b.ondblclick=()=>{
-        window.open(`fpg1.html#${encodeURI(b.aid)}`,"_self").focus();
+        //window.open(`fpg1.html#${encodeURI(b.aid)}`,"_self").focus();
+        navigateTo('fpg1.html',encodeURI(b.aid));
       };
       b.onclick=()=>{
         if(defi.hasOwnProperty(b.firstChild.innerText)){
@@ -75,7 +78,8 @@ chrome.storage.local.get(['data','dark'], function(result) {
 });
 del.onclick=()=>{
   if(Object.keys(defi).length==0){
-    window.open("fpg2.html",'_self').focus();
+    //window.open("fpg2.html",'_self').focus();
+    navigateTo('fpg2.html');
     return;
   }
   if(confirm(del.title)){
@@ -153,7 +157,8 @@ nee.onclick=()=>{
     b1.style.color=wb[c1];
     b.style.border="3px var(--clr1) solid";
     b.ondblclick=()=>{
-      window.open(`fpg1.html#${encodeURI(b.aid)}`,"_self").focus();
+      //window.open(`fpg1.html#${encodeURI(b.aid)}`,"_self").focus();
+      navigateTo('fpg1.html',encodeURI(b.aid));
     };
     b.onclick=()=>{
       if(defi.hasOwnProperty(b.firstChild.innerText)){
@@ -198,3 +203,49 @@ function chcr(){
     root.style.cssText+=`--oln: #ff0000`;
   }
 }
+function navigateTo(page,hash='') {
+  fetch(page)
+    .then(response => response.text())
+    .then(html => {
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, 'text/html');
+      
+      document.querySelectorAll('style[data-from]').forEach(style => {
+        style.remove();
+      });
+      const newStyles = doc.querySelectorAll('style');
+      newStyles.forEach(style => {        
+        const styleClone = style.cloneNode(true);
+        styleClone.setAttribute('data-from', page);
+        document.head.appendChild(styleClone);
+      });
+      document.querySelectorAll('script[data-from]').forEach(script => {
+        script.remove();
+      });
+
+      const newContent = doc.body.innerHTML;
+      
+      const targetElement = document.body;
+      if (targetElement) {
+        targetElement.innerHTML = newContent;
+      }
+      
+      const newUrl = hash ? `${page}#${hash}` : page;
+      window.history.replaceState({}, '', newUrl);
+      
+      if(hash){
+        location.hash=hash;
+      }
+      const newScripts = doc.querySelectorAll('script');
+      newScripts.forEach(newScript => {
+        if (newScript.src) {
+          const script = document.createElement('script');
+          script.src = newScript.src;
+          script.setAttribute('data-src', newScript.src);
+          document.body.appendChild(script);
+        }
+      });
+    })
+    .catch(error => console.error('加載失敗:', error));
+}
+})();
