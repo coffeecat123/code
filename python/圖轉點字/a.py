@@ -6,6 +6,13 @@ import sys
 def add(q):
     global c
     return (c[q][0]+c[q][1]+c[q][2])/3
+def open_as_rgb(path, bg=(255, 255, 255)):
+    im = Image.open(path)
+    if im.mode == "RGBA":
+        background = Image.new("RGB", im.size, bg)
+        background.paste(im, mask=im.split()[3])
+        return background
+    return im.convert("RGB")
 a='\
 ⠀⠁⠂⠃⠄⠅⠆⠇⠈⠉⠊⠋⠌⠍⠎⠏\
 ⠐⠑⠒⠓⠔⠕⠖⠗⠘⠙⠚⠛⠜⠝⠞⠟\
@@ -25,7 +32,7 @@ a='\
 ⣰⣱⣲⣳⣴⣵⣶⣷⣸⣹⣺⣻⣼⣽⣾⣿'
 a1='⠁⠂⠄⠈⠐⠠⡀⢀'
 file=sys.argv[1]
-im = Image.open(file)
+im = im = open_as_rgb(file, bg=(255,255,255))
 c = list(im.getdata())
 c1=[]
 for i in range(len(c)):
@@ -36,13 +43,8 @@ x1=100#行
 y1=100#列
 z=''
 k=128
-i=0
-while(i<y):
-    j=0
-    while(j<x):
-        if(j+2>=x or i+4>=y):
-            j+=2
-            continue
+for i in range(0,y,4):
+    for j in range(0,x,2):
         s=0
         if(add((i+0)*x+j+0)<=k):
             s+=1
@@ -62,7 +64,8 @@ while(i<y):
             s+=128
         z1=a[s]
         if(z1==a[0]):
-            z+=r.choice(a1)
+            #z+=r.choice(a1)
+            z+=z1
         else:
             z+=z1
         j+=2

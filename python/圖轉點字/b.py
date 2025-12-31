@@ -6,11 +6,18 @@ import sys
 def add(q):
     global c
     return (c[q][0]+c[q][1]+c[q][2])/3
+def open_as_rgb(path, bg=(255, 255, 255)):
+    im = Image.open(path)
+    if im.mode == "RGBA":
+        background = Image.new("RGB", im.size, bg)
+        background.paste(im, mask=im.split()[3])
+        return background
+    return im.convert("RGB")
 #1,8,28,56,70,56,28,8,1
 a='⠀⡐⡑⢙⢇⢳⣗⣽⣿'
 a1='⠁⠂⠄⠈⠐⠠⡀⢀'
 file=sys.argv[1]
-im = Image.open(file)
+im = open_as_rgb(file, bg=(255,255,255))
 c = list(im.getdata())
 c1=[]
 for i in range(len(c)):
@@ -18,10 +25,8 @@ for i in range(len(c)):
 c=c1
 x,y=im.size
 z=''
-i=0
-while(i<y):
-    j=0
-    while(j<x):
+for i in range(0,y,2):
+    for j in range(0,x,1):
         z1=a[len(a)-1-int(add(i*x+j)/255*(len(a)-1))]
         if(z1==a[0]):
             z+=r.choice(a1)
@@ -29,6 +34,5 @@ while(i<y):
             z+=z1
         j+=1
     z+='\n'
-    i+=2
 print(z)
 p.copy(z)
