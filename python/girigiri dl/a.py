@@ -217,9 +217,12 @@ def is_number(s: str) -> bool:
 def download_episode(item_name, line_num):
     """下載單一集數"""
     prefix_type = 'EP' if is_number(item_name) else 'SP'
-    if item_name.startswith("SP"):
-        item_name = item_name[2:]
-    raw_prefix = f"[{prefix_type}{item_name}]"
+    display_name = item_name
+    if display_name.startswith("SP"):
+        display_name = display_name[2:] 
+        pass
+    
+    raw_prefix = f"[{prefix_type}{display_name}]"
     prefix = raw_prefix.ljust(9)
 
     m3u8_url = f"{url}{item_name}/playlist.m3u8"
