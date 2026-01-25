@@ -119,7 +119,7 @@ def run_all(start_sn):
         dms = fetch_danmu(sn)
         if dms:
             count = save_xml(dms, sn, no, folder_name)
-            print(f" 成功！儲存了 {count} 條彈幕 (時間已 /1000)")
+            print(f" 成功！儲存了 {count} 條彈幕
         else:
             print(" 無彈幕內容 (可能該集尚未開放或真的沒有彈幕)")
             
