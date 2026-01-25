@@ -72,7 +72,7 @@ def save_xml(danmu_list, sn, ep_no, folder):
     for dm in danmu_list:
         text = dm.get('text', '')
         raw_time = dm.get('time', 0)
-        time_s = float(raw_time)
+        time_s = float(raw_time) / 10
         
         mode = mode_map.get(dm.get('position', 0), 1)
         hex_color = dm.get('color', '#FFFFFF')
