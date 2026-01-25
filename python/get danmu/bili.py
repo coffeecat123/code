@@ -109,8 +109,8 @@ def download_all(ep_id):
         title = ep.get('share_copy', '')
         badge = ep.get('badge', '')
         
-        if "預告" in badge or "預告" in title:
-            print(f"  [跳過] {share_copy} (檢測為預告片)")
+        if "预告" in badge or "预告" in title:
+            print(f"  [跳過] {title} (檢測為預告片)")
             continue
         print(f"正在抓取: {title}...")
         
@@ -122,7 +122,7 @@ def download_all(ep_id):
             if dms is None: return 
             if not dms: break
             all_dms.extend(dms)
-            time.sleep(1)
+            time.sleep(0.3)
         
         if all_dms:
             # 去重
@@ -149,7 +149,7 @@ def download_all(ep_id):
             with open(filename, "w", encoding="utf-8") as f:
                 f.write("\n".join(xml_lines))
             print(f"  [成功] 儲存 {len(unique_dms)} 條彈幕")
-        time.sleep(2)
+        time.sleep(0.5)
 
 if __name__ == "__main__":
     download_all("779778")

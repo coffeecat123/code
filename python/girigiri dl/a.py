@@ -226,8 +226,8 @@ def download_episode(item_name, line_num):
     prefix = raw_prefix.ljust(9)
 
     m3u8_url = f"{url}{item_name}/playlist.m3u8"
-    output_file = os.path.join(output_folder, f"{output_folder} [{prefix_type}][{item_name}].mp4")
-    xml_file = os.path.join(output_folder, f"{output_folder} [{prefix_type}][{item_name}].xml")
+    output_file = os.path.join(output_folder, f"{output_folder} [{prefix_type}][{display_name}].mp4")
+    xml_file = os.path.join(output_folder, f"{output_folder} [{prefix_type}][{display_name}].xml")
     
     total_duration = get_duration(m3u8_url)
     if total_duration is None:
