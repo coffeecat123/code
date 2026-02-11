@@ -9,6 +9,13 @@ from xml.sax.saxutils import escape
 USER_COOKIE = "" 
 # ===========================================
 
+def clean_xml_text(text):
+    """移除 XML 不允許的控制字元 (0x00-0x08, 0x0B-0x0C, 0x0E-0x1F)"""
+    if not isinstance(text, str):
+        text = str(text)
+    # 使用正規表達式匹配並刪除非法字元
+    illegal_chars = re.compile(r'[\x00-\x08\x0b\x0c\x0e-\x1f]')
+    return illegal_chars.sub('', text)
 def get_season_episodes(start_sn):
     """解析劇集清單，不檢查 state"""
     url = "https://api.gamer.com.tw/anime/v1/video.php"
@@ -85,7 +92,7 @@ def save_xml(danmu_list, sn, ep_no, folder):
         p = f"{time_s},{mode},25,{color_dec},{now_ts},0,bahamut,0"
         
         # 使用 escape 處理 & < >，保留其餘原始字元
-        safe_content = escape(str(text))
+        safe_content = escape(clean_xml_text(str(text)))
         xml_lines.append(f'  <d p="{p}">{safe_content}</d>')
         
     xml_lines.append('</i>')

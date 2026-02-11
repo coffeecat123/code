@@ -13,6 +13,14 @@ try:
 except ImportError:
     brotli = None
 
+def clean_xml_text(text):
+    """移除 XML 不允許的控制字元 (0x00-0x08, 0x0B-0x0C, 0x0E-0x1F)"""
+    if not isinstance(text, str):
+        text = str(text)
+    # 使用正規表達式匹配並刪除非法字元
+    illegal_chars = re.compile(r'[\x00-\x08\x0b\x0c\x0e-\x1f]')
+    return illegal_chars.sub('', text)
+
 def _decode_varint(data, pos):
     result, shift = 0, 0
     while True:
@@ -139,7 +147,7 @@ def download_all(ep_id):
             for dm in unique_dms:
                 # 僅轉義 XML 必要符號 (& < >)，保留所有原始控制字元
                 # escape 函數會處理 & -> &amp; < -> &lt; > -> &gt;
-                safe_content = escape(dm['content'])
+                safe_content = escape(clean_xml_text(dm['content']))
                 p = f"{dm['progress']/1000},{dm['mode']},{dm['fontsize']},{dm['color']},{dm['ctime']},0,{dm['midHash']},{dm['id']}"
                 xml_lines.append(f'  <d p="{p}">{safe_content}</d>')
             
