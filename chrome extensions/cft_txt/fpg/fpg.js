@@ -24,6 +24,9 @@ chrome.storage.local.get(['data','dark'], function(result) {
     data=result.data;
     dark=result.dark;
     chcr();
+    setTimeout(()=>{
+      document.body.style.transition="background-color .8s";
+    },10);
     if(document.querySelector(".ripple-overlay")){
       document.querySelector(".ripple-overlay").remove();
     }
@@ -84,9 +87,6 @@ chrome.storage.local.get(['data','dark'], function(result) {
       b.append(b1);
       aqz.append(b);
     }
-    setTimeout(()=>{
-      document.body.style.transition="background-color .8s";
-    },10);
 });
 del.onclick=()=>{
   if(Object.keys(defi).length==0){
