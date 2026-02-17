@@ -62,7 +62,7 @@ function error_page() {
   aqw.style.fontSize = "50px";
   aqw.innerHTML = "no file";
 }
-function chcr(c) {
+window.chcr = function(c) {
   if ((parseInt(c.substring(1, 3), 16) + parseInt(c.substring(3, 5), 16) + parseInt(c.substring(5, 7), 16)) / 3 > 128) {
     c1 = 0;
   }
@@ -84,8 +84,17 @@ function chcr(c) {
   }
   aqw.style.color=`${wb[c1]}`;
   ipc.value = c;
-  root.style.cssText += `--bg: ${c};`;
   root.style.cssText += `--clr1: ${wb[c1]};`;
+  if (document.documentElement.getAttribute('data-navigating') === 'true'){
+    rna.style['border-color']='transparent';
+  }else{
+    document.body.style.transition="";
+    root.style.cssText += `--bg: ${c};`;
+    rna.style['border-color']='var(--bg)';
+    setTimeout(()=>{
+      document.body.style.transition="background-color .8s";
+    },10);
+  }
 }
 gbk.onclick = () => {
   //window.open(`fpg.html`, "_self");

@@ -23,6 +23,7 @@ body {
 }
 #hrt>svg{
     fill:var(--hrt);
+    transition: fill .1s linear;
 }
 #rna {
     background: transparent;
@@ -41,6 +42,7 @@ body {
 }
 svg.btn {
     fill: var(--clr1);
+    transition: fill .1s linear;
 }
 #aqx>button {
     background: transparent;
@@ -88,6 +90,17 @@ svg.btn {
 ::-webkit-scrollbar-corner {
     background-color: var(--scrollbar-corner);
     border-radius: 2px;
+}
+.ripple-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: -1;
+    clip-path: circle(0% at var(--x) var(--y));
+    transition: clip-path 0.8s ease-in-out;
 }
     </style>
   </head>

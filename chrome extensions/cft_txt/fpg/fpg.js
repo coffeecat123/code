@@ -24,6 +24,9 @@ chrome.storage.local.get(['data','dark'], function(result) {
     data=result.data;
     dark=result.dark;
     chcr();
+    if(document.querySelector(".ripple-overlay")){
+      document.querySelector(".ripple-overlay").remove();
+    }
     if(Object.keys(data).length==0){
       aqz.style.color = "var(--oln)";
       aqz.style.fontSize = "50px";
@@ -49,9 +52,15 @@ chrome.storage.local.get(['data','dark'], function(result) {
       }
       b1.style.color=wb[c1];
       b.style.border="3px var(--clr1) solid";
-      b.ondblclick=()=>{
+      b.ondblclick=(e)=>{
+        const x = e.clientX;
+        const y = e.clientY;
+        const color = c;
+        if(color!=data[b.aid][0]){
+          color=data[b.aid][0];
+        }
         //window.open(`fpg1.html#${encodeURI(b.aid)}`,"_self").focus();
-        navigateTo('fpg1.html',encodeURI(b.aid));
+        navigateToWithRipple('fpg1.html',encodeURI(b.aid), x, y, color);
       };
       b.onclick=()=>{
         if(defi.hasOwnProperty(b.firstChild.innerText)){
@@ -75,6 +84,9 @@ chrome.storage.local.get(['data','dark'], function(result) {
       b.append(b1);
       aqz.append(b);
     }
+    setTimeout(()=>{
+      document.body.style.transition="background-color .8s";
+    },10);
 });
 del.onclick=()=>{
   if(Object.keys(defi).length==0){
@@ -156,10 +168,13 @@ nee.onclick=()=>{
     }
     b1.style.color=wb[c1];
     b.style.border="3px var(--clr1) solid";
-    b.ondblclick=()=>{
-      //window.open(`fpg1.html#${encodeURI(b.aid)}`,"_self").focus();
-      navigateTo('fpg1.html',encodeURI(b.aid));
-    };
+    b.ondblclick=(e)=>{
+        const x = e.clientX;
+        const y = e.clientY;
+        const color = c;
+        //window.open(`fpg1.html#${encodeURI(b.aid)}`,"_self").focus();
+        navigateToWithRipple('fpg1.html',encodeURI(b.aid), x, y, color);
+      };
     b.onclick=()=>{
       if(defi.hasOwnProperty(b.firstChild.innerText)){
         b.style.outline=`none`;
@@ -202,6 +217,25 @@ function chcr(){
     root.style.cssText+=`--scrollbar-thumbh: #c4c4c4`;
     root.style.cssText+=`--oln: #ff0000`;
   }
+}
+function navigateToWithRipple(page,hash='', x, y, color) {
+  document.documentElement.setAttribute('data-navigating', 'true');
+  const ripple = document.createElement('div');
+  ripple.className = 'ripple-overlay';
+  ripple.style.backgroundColor = color;
+  ripple.style.setProperty('--x', `${x}px`);
+  ripple.style.setProperty('--y', `${y}px`);
+  document.documentElement.appendChild(ripple);
+
+  setTimeout(() => {
+      ripple.style.clipPath = `circle(150% at ${x}px ${y}px)`;
+  }, 0);
+  ripple.addEventListener('transitionend', () => {
+      document.documentElement.removeAttribute('data-navigating');
+      window.chcr(color);
+      ripple.remove();
+  });
+  navigateTo(page,hash);
 }
 function navigateTo(page,hash='') {
   fetch(page)

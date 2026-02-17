@@ -27,15 +27,18 @@ body {
 }
 #hrt>svg{
     fill:var(--hrt);
+    transition: fill .1s linear;
 }
 #spn {
     font-size: 26px;
     color: var(--clr1);
     width: calc(100vw - 16px - 160px);
     margin: 0 5px 0 5px;
+    transition: color .1s linear;
 }
 svg.btn {
     fill: var(--clr1);
+    transition: fill .1s linear;
 }
 svg.moon {
     fill: var(--clr1);
@@ -120,6 +123,17 @@ svg.sun {
 ::-webkit-scrollbar-corner {
     background-color: var(--scrollbar-corner);
     border-radius: 2px;
+}
+.ripple-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: -1;
+    clip-path: circle(0% at var(--x) var(--y));
+    transition: clip-path 0.8s ease-in-out;
 }
     </style>
   </head>
