@@ -26,7 +26,7 @@ chrome.storage.local.get(['data','dark'], function(result) {
     chcr();
     setTimeout(()=>{
       document.body.style.transition="background-color .8s";
-    },10);
+    },100);
     if(document.querySelector(".ripple-overlay")){
       document.querySelector(".ripple-overlay").remove();
     }
