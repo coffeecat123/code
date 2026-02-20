@@ -225,16 +225,16 @@ def download_episode(item_type, item, line_num):
     if item_type.startswith('ep'):
         # 處理標準集數和半集
         m3u8_url = f"{url}{raw_path_item}/playlist.m3u8"
-        output_file = os.path.join(output_folder, f"OreNoImoto [EP][{item_str}].mp4")
-        xml_file = os.path.join(output_folder, f"OreNoImoto [EP][{item_str}].xml") # 新增 XML 檔案名
+        output_file = os.path.join(output_folder, f"{output_folder} [EP][{item_str}].mp4")
+        xml_file = os.path.join(output_folder, f"{output_folder} [EP][{item_str}].xml") # 新增 XML 檔案名
         RAW_PREFIX = f"[EP{raw_path_item}]" # 原始前綴 (不含空格)
 
     elif item_type.startswith('sp'):
         # 處理特別篇和特別篇半集
         # 檔案和 URL 使用 SP + 編號
         m3u8_url = f"{url}SP{raw_path_item}/playlist.m3u8"
-        output_file = os.path.join(output_folder, f"OreNoImoto [SP][{item_str}].mp4")
-        xml_file = os.path.join(output_folder, f"OreNoImoto [SP][{item_str}].xml") # 新增 XML 檔案名
+        output_file = os.path.join(output_folder, f"{output_folder} [SP][{item_str}].mp4")
+        xml_file = os.path.join(output_folder, f"{output_folder} [SP][{item_str}].xml") # 新增 XML 檔案名
         RAW_PREFIX = f"[SP{raw_path_item}]" # 原始前綴 (不含空格)
     else:
         # 項目類型錯誤
