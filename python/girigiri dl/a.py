@@ -131,6 +131,7 @@ def get_duration(m3u8_url):
     try:
         command = [
             "ffprobe", "-v", "error", "-i", m3u8_url,
+            "-extension_picky", "0",
             "-show_entries", "format=duration", 
             "-of", "default=noprint_wrappers=1:nokey=1"
         ]
@@ -273,6 +274,7 @@ def download_episode(item_name, line_num):
     try:
         command = [
             "ffmpeg", "-v", "error", "-hide_banner", "-stats", 
+            "-extension_picky", "0",
             "-protocol_whitelist", "file,http,https,tcp,tls", 
             "-i", m3u8_url, "-c", "copy", "-y", output_file
         ]
