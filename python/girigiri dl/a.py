@@ -33,14 +33,28 @@ with sync_playwright() as p:
     print(spans)
 
     if m3u8_urls:
+        url = "" # 初始化
         for m3u8_url in m3u8_urls:
             parsed = urlparse(m3u8_url)
             query_params = parse_qs(parsed.query)
-            real_url = query_params.get("url", [""])[0]
-            url = "/".join(real_url.split("/")[:-2]) + "/"
-            print(url)
+            
+            # 只有當 url 參數存在且不為空時，才執行解析
+            extracted_url = query_params.get("url", [""])[0]
+            
+            if extracted_url:
+                # 抓到帶參數的網址了！解析出目錄路徑
+                url = "/".join(extracted_url.split("/")[:-2]) + "/"
+                print(f"✅ 成功從參數提取 URL: {url}")
+                break # 抓到正確的就直接跳出，不要管後面的請求
+        
+        # 萬一跑完迴圈 url 還是空的（代表沒人帶參數），給一個保底
+        if not url and m3u8_urls:
+            url = "/".join(m3u8_urls[0].split("/")[:-2]) + "/"
+            print(f"⚠️ 沒找到參數，使用原始第一條網址: {url}")
     else:
-        print("沒有捕到 playlist.m3u8 請求")
+        print("❌ 沒有捕到 playlist.m3u8 請求")
+        browser.close()
+        sys.exit()
 
     browser.close()
 
