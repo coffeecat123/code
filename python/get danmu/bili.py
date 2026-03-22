@@ -7,12 +7,61 @@ from xml.sax.saxutils import escape
 # ================= 配置區域 =================
 USER_COOKIE = "buvid3=7CC56DE8-43CC-89D1-F85E-E0BBAFEF0AF631370infoc; balh_server_inner=__custom__; balh_is_closed=; _uuid=3817C9BA-3F48-C6A1-8C94-C525255BE4C933541infoc; b_nut=1752853133; buvid_fp=a843904da524246ae3d1717b95165221; rpdid=|()YYuuYkkk0J'u~lk)lRJR|; CURRENT_QUALITY=0; CURRENT_FNVAL=16; b_lsid=10DBD10DCE_19BDBE4A0E3; bsource=search_google; home_feed_column=4; lang=zh-Hans; bmg_af_switch=1; bmg_src_def_domain=i1.hdslb.com; buvid4=AA7A737A-B54A-683D-C760-B8E87461543633152-025071823-+UDY6hIO+4nfpj/oQNOeZA%3D%3D; bili_ticket=eyJhbGciOiJIUzI1NiIsImtpZCI6InMwMyIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjkxNzk5NTQsImlhdCI6MTc2ODkyMDY5NCwicGx0IjotMX0.lVnZRlVbKpv25X6Wiwv2CraPNArUDgUgPUxk_Zl9GAs; bili_ticket_expires=1769179894; browser_resolution=674-569" 
 # ===========================================
-
+PROXY_ADDR = "chrome.paymentwiser.com:7777"
+PROXIES = {
+    "http": f"http://{PROXY_ADDR}",
+    "https": f"http://{PROXY_ADDR}",
+}
 try:
     import brotli
 except ImportError:
     brotli = None
 
+def smart_request(url, is_json=False):
+    """
+    第一階段：嘗試直接連線 (直連)
+    第二階段：若失敗，則嘗試使用 Proxy
+    """
+    # 1. 嘗試直連
+    try:
+        # print(f"正在嘗試直連: {url}")
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+            "Cookie": USER_COOKIE,
+            "Accept-Encoding": "gzip, deflate, br"
+        }
+        resp = requests.get(url, headers=headers)
+        # 如果是 PGC 介面，code 0 代表成功；如果是普通請求，status 200 代表成功
+        if resp.status_code == 200:
+            if is_json:
+                data = resp.json()
+                if data.get('code') == 0: return data
+            else:
+                return resp
+    except Exception as e:
+        print(f"直連失敗，準備切換 Proxy... ({e})")
+    print("正在切換 Proxy 連線...")
+    # 2. 嘗試使用 Proxy
+    try:
+        # print(f"正在透過 Proxy 連線: {url}")
+        resp = requests.get(url, headers=get_fake_headers(), proxies=PROXIES, timeout=2)
+        if resp.status_code == 200:
+            return resp.json() if is_json else resp
+    except Exception as e:
+        print(f"Proxy 連線也失敗: {e}")
+    
+    return None
+def get_bilibili_api(url):
+    return smart_request(url, is_json=True)
+def get_fake_headers():
+    import random
+    fake_ip = f"220.181.111.{random.randint(1, 254)}"
+    return {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
+        "X-Forwarded-For": fake_ip,
+        "Referer": "https://www.bilibili.com/",
+        "Cookie": USER_COOKIE # 使用你原本定義好的 Cookie
+    }
 def clean_xml_text(text):
     """移除 XML 不允許的控制字元 (0x00-0x08, 0x0B-0x0C, 0x0E-0x1F)"""
     if not isinstance(text, str):
@@ -33,14 +82,9 @@ def _decode_varint(data, pos):
         if shift >= 64: raise ValueError("Varint too long")
 
 def get_season_info(ep_id):
-    url = f"https://api.bilibili.com/pgc/view/web/season?ep_id={ep_id}"
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
-        "Referer": "https://www.bilibili.com",
-        "Cookie": USER_COOKIE
-    }
     try:
-        resp = requests.get(url, headers=headers).json()
+        url = f"https://api.bilibili.com/pgc/view/web/season?ep_id={ep_id}"
+        resp = get_bilibili_api(url)
         if resp.get('code') != 0: return None, []
         return resp['result'].get('title', 'Unknown'), resp['result'].get('episodes', [])
     except: return None, []
@@ -92,12 +136,10 @@ def parse_dm_segment(data):
 
 def fetch_seg(cid, idx):
     url = f"https://api.bilibili.com/x/v2/dm/web/seg.so?type=1&oid={cid}&segment_index={idx}"
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
-        "Cookie": USER_COOKIE,
-        "Accept-Encoding": "gzip, deflate, br"
-    }
-    resp = requests.get(url, headers=headers)
+    resp = smart_request(url, is_json=False)
+    
+    if not resp: return None
+    
     content = resp.content
     if resp.headers.get('Content-Encoding') == 'br' and brotli:
         try: content = brotli.decompress(content)
@@ -160,5 +202,5 @@ def download_all(ep_id):
         time.sleep(0.5)
 
 if __name__ == "__main__":
-    download_all("779778")
+    download_all("510756")
     input("\n完成！")
