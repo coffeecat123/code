@@ -1,4 +1,4 @@
-﻿from PIL import Image
+from PIL import Image
 def qaz(x,y):
     global k
     q0=eval(k.split('=')[0])

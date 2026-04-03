@@ -1,0 +1,9 @@
+brotli
+image_to_ascii
+pillow
+playwright
+pyautogui
+pyperclip
+requests
+toascii
+pypdf

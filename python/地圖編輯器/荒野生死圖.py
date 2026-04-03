@@ -1,4 +1,4 @@
-﻿import turtle as tl
+import turtle as tl
 import tkinter as tk
 import tkinter.messagebox as tm
 import tkinter.colorchooser as cc

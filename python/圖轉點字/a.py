@@ -1,4 +1,4 @@
-﻿from PIL import Image
+from PIL import Image
 import os
 import random as r
 import pyperclip as p
