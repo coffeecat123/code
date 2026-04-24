@@ -242,6 +242,9 @@ def download_episode(item_type, item, line_num):
         print_at_line(line_num, f"[ERROR] 未知的項目類型: {item_type}")
         return
 
+    
+    if(m3u8_url.endswith('//playlist.m3u8')):
+        m3u8_url = m3u8_url.replace('//playlist.m3u8', '/playlist.m3u8')
     # ======================================================
     # === 核心修改：固定 PREFIX 寬度 (10 字元) ===
     FIXED_PREFIX_LEN = 9
