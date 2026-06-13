@@ -12,7 +12,7 @@ import utils
 
 # ==================== 1. Playwright 擷取 ====================
 
-page_url = "https://ani.girigirilove.com/playGV5021-1-1/"
+page_url = "https://ani.girigirilove.com/playGV819-1-1/"
 
 with sync_playwright() as p:
     browser = p.chromium.launch(headless=True)
@@ -67,7 +67,7 @@ def span_to_task(t: str):
         stem = f"{int(float(t)):02d}"
         return stem, f"EP{stem}"
     else:
-        return t, f"EP{t}"
+        return t, f"SP{t}"
 
 tasks       = [span_to_task(s) for s in spans]
 total_tasks = len(tasks)
