@@ -1,7 +1,9 @@
 import os
 import re
 import sys
+import time
 import subprocess
+import threading
 from threading import Lock
 import requests
 
@@ -10,6 +12,21 @@ import requests
 print_lock = Lock()
 XML_API_URL = "https://m3u8.girigirilove.com/api.php/Scrolling/getVodOutScrolling"
 
+headers = {
+    "accept": "*/*",
+    "accept-language": "zh-TW,zh;q=0.9,en-US;q=0.8,en;q=0.7",
+    "cache-control": "no-cache",
+    "pragma": "no-cache",
+    "priority": "i",
+    "sec-ch-ua": '"Google Chrome";v="149", "Chromium";v="149", "Not)A;Brand";v="24"',
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": '"Windows"',
+    "sec-fetch-dest": "video",
+    "sec-fetch-mode": "no-cors",
+    "sec-fetch-site": "same-site",
+    "sec-fetch-storage-access": "active",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36"
+}
 # ==================== 終端游標控制 ====================
 
 def move_cursor_up(n):
@@ -140,7 +157,7 @@ def download_m3u8_xml(m3u8_url, xml_save_path, line_num, prefix):
         print_at_line(line_num, f"{prefix}🔍 正在獲取 XML 資訊...")
         resp = requests.post(XML_API_URL,
                              json={"play_url": m3u8_url},
-                             headers={'Content-Type': 'application/json'},
+                             headers=headers,
                              timeout=10)
         resp.raise_for_status()
         data = resp.json()
@@ -150,7 +167,7 @@ def download_m3u8_xml(m3u8_url, xml_save_path, line_num, prefix):
             return False
 
         print_at_line(line_num, f"{prefix}📥 正在下載 XML 文件...")
-        xml_resp = requests.get(data['info'], timeout=10)
+        xml_resp = requests.get(data['info'], headers=headers, timeout=10)
         xml_resp.raise_for_status()
 
         with open(xml_save_path, 'wb') as f:
@@ -209,31 +226,47 @@ STATUS_TEXT = "🚚 下載中... "
 # start_col：前綴 + 狀態文字可見字元數 + emoji 補償 + ANSI 座標從 1 起算
 PROGRESS_START_COL = PREFIX_LEN + len(STATUS_TEXT.strip()) + 4 + 1
 
-def run_ffmpeg_download(m3u8_url, output_file, prefix, line_num,
-                        total_duration, stop_event, active_processes, processes_lock):
-    """
-    執行 ffmpeg 下載並即時更新進度條。
-    回傳 True（成功）/ False（失敗）/ None（被中止）。
-    """
+def _run_ffmpeg_once(m3u8_url, output_file, prefix, line_num, total_duration,
+                     stop_event, active_processes, processes_lock,
+                     stall_timeout, req_headers):
+    """單次執行 ffmpeg，內含卡死偵測看門狗。
+       回傳 'ok' / 'stalled' / 'failed' / 'aborted'"""
     time_pattern = re.compile(r'time=(\d{2}:\d{2}:\d{2}\.\d+)')
-
-    if stop_event.is_set():
-        print_at_line(line_num, f"{prefix}🛑 已收到中止信號，取消任務")
-        return None
 
     startupinfo = None
     if os.name == "nt":
         startupinfo = subprocess.STARTUPINFO()
         startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
 
+    header_lines = "".join(f"{k}: {v}\r\n" for k, v in req_headers.items() if k.lower() != "range")
+
     command = [
         "ffmpeg", "-v", "error", "-hide_banner", "-stats",
         "-extension_picky", "0",
-        "-protocol_whitelist", "file,http,https,tcp,tls",
+        "-user_agent", req_headers.get("user-agent", ""),
+        "-headers", header_lines,
+        "-rw_timeout", "15000000",  # ffmpeg 端的讀取逾時(微秒)，避免單一請求無限期等待
+        "-protocol_whitelist", "file,http,https,tcp,tls,crypto",
         "-i", m3u8_url, "-c", "copy", "-y", output_file
     ]
 
     process = None
+    stalled = {"flag": False}
+    last_activity = {"t": time.time()}
+
+    def watchdog():
+        while True:
+            if process is None or process.poll() is not None or stop_event.is_set():
+                return
+            if time.time() - last_activity["t"] > stall_timeout:
+                stalled["flag"] = True
+                try:
+                    process.kill()
+                except Exception:
+                    pass
+                return
+            time.sleep(2)
+
     try:
         process = subprocess.Popen(
             command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
@@ -242,9 +275,17 @@ def run_ffmpeg_download(m3u8_url, output_file, prefix, line_num,
         with processes_lock:
             active_processes.append(process)
 
+        wd_thread = threading.Thread(target=watchdog, daemon=True)
+        wd_thread.start()
+
         last_percent = -1
         for line in process.stdout:
+            last_activity["t"] = time.time()
             if stop_event.is_set():
+                try:
+                    process.kill()
+                except Exception:
+                    pass
                 break
             match = time_pattern.search(line)
             if match:
@@ -261,25 +302,190 @@ def run_ffmpeg_download(m3u8_url, output_file, prefix, line_num,
         process.wait()
 
         if stop_event.is_set():
-            print_at_line(line_num, f"{prefix}🛑 下載被手動中止")
-            return None
-
-        if process.returncode == 0:
-            final_bar = draw_time_progress(1.0, total_duration, total_duration, 'N/A')
-            print_at_line(line_num, f"{prefix}✅ 下載完成 {final_bar}")
-            return True
-        else:
-            print_at_line(line_num, f"{prefix}❌ 下載失敗 (Code: {process.returncode})")
-            return False
+            return "aborted"
+        if stalled["flag"]:
+            return "stalled"
+        return "ok" if process.returncode == 0 else "failed"
 
     except Exception as e:
         print_at_line(line_num, f"{prefix}❌ 執行錯誤: {e}")
-        return False
+        return "failed"
     finally:
         if process:
             with processes_lock:
                 if process in active_processes:
                     active_processes.remove(process)
+
+
+def run_ffmpeg_download(m3u8_url, output_file, prefix, line_num,
+                        total_duration, stop_event, active_processes, processes_lock,
+                        request_headers=None, stall_timeout=20, max_retries=2):
+    """
+    執行 ffmpeg 下載並即時更新進度條，內建卡死偵測（超過 stall_timeout 秒無新進度
+    就視為卡死，自動中斷並重試，最多重試 max_retries 次）。
+    回傳 True（成功）/ False（失敗）/ None（被中止）。
+    """
+    if stop_event.is_set():
+        print_at_line(line_num, f"{prefix}🛑 已收到中止信號，取消任務")
+        return None
+
+    req_headers = request_headers or headers
+
+    attempt = 0
+    while True:
+        attempt += 1
+        result = _run_ffmpeg_once(m3u8_url, output_file, prefix, line_num, total_duration,
+                                  stop_event, active_processes, processes_lock,
+                                  stall_timeout, req_headers)
+
+        if result == "aborted":
+            print_at_line(line_num, f"{prefix}🛑 下載被手動中止")
+            return None
+
+        if result == "ok":
+            final_bar = draw_time_progress(1.0, total_duration, total_duration, 'N/A')
+            print_at_line(line_num, f"{prefix}✅ 下載完成 {final_bar}")
+            return True
+
+        if result == "stalled" and attempt <= max_retries:
+            print_at_line(line_num, f"{prefix}⏱️ 超過{stall_timeout}秒無進度，疑似卡死，重試 ({attempt}/{max_retries})...")
+            continue
+
+        if result == "stalled":
+            print_at_line(line_num, f"{prefix}❌ 重試 {max_retries} 次仍卡死，放棄此集")
+        else:
+            print_at_line(line_num, f"{prefix}❌ 下載失敗")
+        return False
+
+# ==================== 整合下載任務（各下載腳本直接呼叫即可） ====================
+
+def download_m3u8_task(m3u8_url, output_file, xml_file, prefix, line_num,
+                        stop_event, active_processes, processes_lock):
+    """
+    完整下載一集 m3u8 串流：取得時長 -> 下載彈幕 XML(API版) -> ffmpeg 下載。
+    回傳值同 run_ffmpeg_download：True(成功) / False(失敗或無法取得時長) / None(被中止)。
+    """
+    total_duration = get_duration(m3u8_url)
+    if total_duration is None:
+        print_at_line(line_num, f"{prefix}⚠️ 無法獲取總時長，跳過")
+        return False
+
+    download_m3u8_xml(m3u8_url, xml_file, line_num, prefix)
+    print_at_line(line_num, f"{prefix}{STATUS_TEXT.strip()}")
+    print_progress_only(line_num, PROGRESS_START_COL,
+                         draw_time_progress(0, 0, total_duration, 'N/A'))
+
+    return run_ffmpeg_download(m3u8_url, output_file, prefix, line_num,
+                               total_duration, stop_event, active_processes, processes_lock)
+
+
+def download_mp4_task(target_url, save_path, prefix, line_num, stop_event,
+                       danmu_info=None, xml_before=False, request_headers=None):
+    """
+    完整下載一集 HTTP 直連 mp4：Range 分塊下載（支援斷流重試/續傳）+ 彈幕 XML（直連版）。
+
+    danmu_info: dict，需含 download_danmu_xml() 的參數
+                {video_base_url, base_name, item_name, display_label, save_dir}
+                傳 None 則不抓彈幕。
+    xml_before: True  -> 像 d.py，先抓彈幕再下載影片
+                False -> 像 c.py，先下載影片再抓彈幕
+    request_headers: 不指定則使用本模組預設的 headers。
+    回傳 has_xml(bool)；若中途被手動中止或斷流重試失敗，回傳 None。
+    """
+    req_headers = request_headers or headers
+    has_xml = False
+
+    def fetch_xml():
+        if not danmu_info:
+            return False
+        print_at_line(line_num, f"{prefix}📥 正在獲取彈幕 XML...")
+        try:
+            return download_danmu_xml(**danmu_info)
+        except Exception:
+            return False
+
+    if xml_before:
+        has_xml = fetch_xml()
+        if stop_event.is_set():
+            print_at_line(line_num, f"{prefix}🛑 任務手動中止")
+            return None
+
+    downloaded_bytes = 0
+    total_bytes = None
+    retry_count = 0
+    last_ui_update = 0
+    start_col = PROGRESS_START_COL
+
+    print_at_line(line_num, f"{prefix}{STATUS_TEXT.strip()}")
+    print_progress_only(line_num, start_col, draw_size_progress(0.0, 0, None))
+
+    with requests.Session() as session:
+        session.headers.update(req_headers)
+        with open(save_path, 'wb') as f:
+            while not stop_event.is_set():
+                session.headers['range'] = f"bytes={downloaded_bytes}-"
+                try:
+                    with session.get(target_url, stream=True, timeout=(10, 3)) as r:
+                        if r.status_code == 416:
+                            break
+                        r.raise_for_status()
+
+                        if total_bytes is None:
+                            cr = r.headers.get('Content-Range')
+                            if cr:
+                                m = re.search(r'/(\d+)', cr)
+                                if m:
+                                    total_bytes = int(m.group(1))
+                            if total_bytes is None:
+                                cl = r.headers.get('Content-Length')
+                                if cl:
+                                    total_bytes = int(cl)
+
+                        bytes_in_chunk = 0
+                        for chunk in r.iter_content(chunk_size=128 * 1024):
+                            if stop_event.is_set():
+                                break
+                            if chunk:
+                                f.write(chunk)
+                                downloaded_bytes += len(chunk)
+                                bytes_in_chunk += len(chunk)
+                                now = time.time()
+                                if now - last_ui_update > 0.15:
+                                    pct = (downloaded_bytes / total_bytes) if total_bytes else 0.0
+                                    print_progress_only(
+                                        line_num, start_col,
+                                        draw_size_progress(pct, downloaded_bytes, total_bytes)
+                                    )
+                                    last_ui_update = now
+
+                        retry_count = 0
+                        if bytes_in_chunk == 0:
+                            break
+
+                except requests.exceptions.Timeout:
+                    if stop_event.is_set():
+                        break
+                    continue
+
+                except requests.exceptions.RequestException:
+                    retry_count += 1
+                    if retry_count > 5:
+                        print_at_line(line_num, f"{prefix}❌ 連續斷流重試失敗，跳過此集")
+                        return None
+                    time.sleep(1.5)
+
+    if stop_event.is_set():
+        print_at_line(line_num, f"{prefix}🛑 任務手動中止")
+        return None
+
+    if not xml_before:
+        has_xml = fetch_xml()
+
+    final_total = total_bytes if total_bytes else downloaded_bytes
+    success_bar = draw_size_progress(1.0, final_total, final_total)
+    danmu_tag = " (含彈幕)" if has_xml else " (無彈幕)"
+    print_at_line(line_num, f"{prefix}✅ 下載完成{danmu_tag} {success_bar}")
+    return has_xml
 
 # ==================== 其他工具 ====================
 
