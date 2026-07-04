@@ -20,7 +20,7 @@ import utils
 #   - 結尾是 .mp4          -> 走 utils.download_mp4_task（HTTP Range 分塊）
 # 程式會自動判斷該用哪一種方式下載，兩種可以混在同一份清單裡。
 
-LIST_PAGE_URL = "https://ani.girigirilove.com/playGV22116-1-1/"
+LIST_PAGE_URL = "https://ani.girigirilove.com/playGV20326-1-1/"
 
 
 def get_episode_links(page, list_page_url):
@@ -37,8 +37,7 @@ def get_episode_links(page, list_page_url):
     return [(it["label"], urljoin(list_page_url, it["href"])) for it in items if it["href"]]
 
 
-def get_real_media_url(page, episode_page_url, wait_ms=6000):
-    """打開單集頁面，攔截 atom.php 請求，回傳其 url= 參數（真正的 m3u8 或 mp4 網址）"""
+def get_real_media_url(page, episode_page_url, timeout_ms=8000):
     found = {"value": None}
 
     def on_request(request):
@@ -53,11 +52,14 @@ def get_real_media_url(page, episode_page_url, wait_ms=6000):
     page.on("request", on_request)
     try:
         page.goto(episode_page_url)
-        page.wait_for_timeout(wait_ms)
+        # 改成：每 200ms 檢查一次，最多等 timeout_ms，抓到就立刻返回
+        waited = 0
+        while not found["value"] and waited < timeout_ms:
+            page.wait_for_timeout(200)
+            waited += 200
     finally:
         page.remove_listener("request", on_request)
     return found["value"]
-
 
 def media_type_of(real_url: str) -> str:
     clean = real_url.split('?')[0]
