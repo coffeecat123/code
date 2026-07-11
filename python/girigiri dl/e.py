@@ -20,7 +20,7 @@ import utils
 #   - 結尾是 .mp4          -> 走 utils.download_mp4_task（HTTP Range 分塊）
 # 程式會自動判斷該用哪一種方式下載，兩種可以混在同一份清單裡。
 
-LIST_PAGE_URL = "https://ani.girigirilove.com/playGV20326-1-1/"
+LIST_PAGE_URL = "https://ani.girigirilove.com/playGV27015-1-1/"
 
 
 def get_episode_links(page, list_page_url):
@@ -116,6 +116,8 @@ if not episodes:
 
 sample_path = urlparse(episodes[0]["real_url"]).path
 output_folder = sample_path.rstrip('/').split('/')[-2]
+if utils.is_number(output_folder):
+    output_folder = sample_path.rstrip('/').split('/')[-3]
 total_episodes = len(episodes)
 max_workers = 10
 
