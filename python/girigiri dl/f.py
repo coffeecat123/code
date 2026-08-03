@@ -65,7 +65,7 @@ def download_task(item_name, display_label, line_num):
             "save_dir": SAVE_DIR,
         }
         utils.download_mp4_task(target_url, output_file, prefix, line_num, stop_event,
-                                 danmu_info=danmu_info, xml_before=False)
+                                 danmu_info=danmu_info, xml_before=True)
 
     else:
         utils.print_at_line(line_num, f"[ERROR] 未知的 MEDIA_TYPE: {MEDIA_TYPE}")
